@@ -26,7 +26,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1n0y1M3z5TQjUZYWvuzGorDz3cJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -37,14 +37,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ToTheLooClient" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6fb1343f-9373-4396-b333-103546b4d880" name="Default Changelist" comment="" />
+      <changelist id="a9d5e773-07b4-42fd-8f22-1d78387bcd3f" name="Default Changelist" comment="" />
       <created>1610541086987</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
