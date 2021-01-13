@@ -16,7 +16,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
     public static final String COL_3 = "Longitude";
     public static final String COL_4 = "Price";
     public static final String COL_5 = "Rating";
-    public static final String COL_6 = "Pissior";
+    public static final String COL_6 = "Only_Pissior";
 
     public ClientDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -24,7 +24,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + " ("+COL_1+" INTEGER PRIMARY KEY, "+COL_2+" TEXT, "+COL_3+" TEXT, "+COL_4+" FLOAT, "+COL_5+" FLOAT, "+COL_6+" BOOLEAN)");
+        db.execSQL("create table " + TABLE_NAME+" ("+COL_1+" INTEGER PRIMARY KEY,"+COL_2+" TEXT,"+COL_3+" TEXT,"+COL_4+" FLOAT,"+COL_5+" FLOAT,"+COL_6+" BOOLEAN)");
     }
 
     @Override
@@ -34,7 +34,27 @@ public class ClientDatabase extends SQLiteOpenHelper {
     }
 
     //Returns true if inserting Data was successful.
-    public boolean insertData(int id, String latitude, String longitude, float price, float rating, boolean pissior) {
+    public boolean insertDataAsString(String input) {
+        int id;
+        String latitude;
+        String longitude;
+        float price;
+        float rating;
+        boolean onlyPissior;
+
+        String[] data = input.split(";");
+
+        id = Integer.parseInt(data[0]);
+        latitude = data[1];
+        longitude = data[2];
+        price = Float.parseFloat(data[3]);
+        rating = Float.parseFloat(data[4]);
+        onlyPissior = Boolean.parseBoolean(data[5]);
+
+        return insertData(id, latitude, longitude, price, rating, onlyPissior);
+    }
+
+    private boolean insertData(int id, String latitude, String longitude, float price, float rating, boolean onlyPissior) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, id);
@@ -42,18 +62,13 @@ public class ClientDatabase extends SQLiteOpenHelper {
         contentValues.put(COL_3, longitude);
         contentValues.put(COL_4, price);
         contentValues.put(COL_5, rating);
-        contentValues.put(COL_6, pissior);
+        contentValues.put(COL_6, onlyPissior);
         long res = db.insert(TABLE_NAME, null, contentValues);
-        if(res == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return res != -1;
     }
 
     public Cursor extractDataByID(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + " = " + id,null);
-        return res;
+        return db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + " = " + id,null);
     }
 }
