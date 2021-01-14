@@ -26,8 +26,8 @@ public class TcpConnector implements Runnable {
     @Override
     public void run() {
         Socket socket = null;
-        String host = "192.168.2.111"; //your computer IP address
-        int port = 63570;
+        String host = "192.168.178.34"; //your computer IP address
+        int port = 42069;
 
         PrintWriter out = null;
         BufferedReader in = null;
