@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:ToTheLooClient/.idea/workspace.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
@@ -20,16 +21,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9d5e773-07b4-42fd-8f22-1d78387bcd3f" name="Default Changelist" comment="" />
+=======
+<<<<<<< Updated upstream
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6fb1343f-9373-4396-b333-103546b4d880" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1n0y1M3z5TQjUZYWvuzGorDz3cJ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,6 +61,72 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ToTheLooClient" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6fb1343f-9373-4396-b333-103546b4d880" name="Default Changelist" comment="" />
+      <created>1610541086987</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610541086987</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1610541837490">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1610541837490" />
+  </component>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0eed4fcb-e5bf-4df7-83cb-a30aa0ba0769" name="Default Changelist" comment="" />
+>>>>>>> Stashed changes:.idea/workspace.xml
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+<<<<<<< Updated upstream:ToTheLooClient/.idea/workspace.xml
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1n0y1M3z5TQjUZYWvuzGorDz3cJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+=======
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1n0ywTtJtSO2Y2vQszhvhFSRynQ" />
+>>>>>>> Stashed changes:.idea/workspace.xml
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+<<<<<<< Updated upstream:ToTheLooClient/.idea/workspace.xml
+=======
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+>>>>>>> Stashed changes:.idea/workspace.xml
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SvnConfiguration">
@@ -44,6 +134,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< Updated upstream:ToTheLooClient/.idea/workspace.xml
       <changelist id="a9d5e773-07b4-42fd-8f22-1d78387bcd3f" name="Default Changelist" comment="" />
       <created>1610541086987</created>
       <option name="number" value="Default" />
@@ -71,4 +162,29 @@
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1610541837490" />
     <state x="-1180" y="595" key="FileChooserDialogImpl/0.0.2560.1400/-1920.321.1920.1040@-1920.321.1920.1040" timestamp="1610544978094" />
   </component>
+=======
+      <changelist id="0eed4fcb-e5bf-4df7-83cb-a30aa0ba0769" name="Default Changelist" comment="" />
+      <created>1610541540634</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610541540634</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1655" y="216" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610541851376">
+      <screen x="1280" y="25" width="1920" height="1055" />
+    </state>
+    <state x="1655" y="216" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1280.708/1280.25.1920.1055@1280.25.1920.1055" timestamp="1610541851376" />
+    <state x="1661" y="323" width="1060" height="468" key="AVDManager" timestamp="1610541922057">
+      <screen x="1280" y="25" width="1920" height="1055" />
+    </state>
+    <state x="1661" y="323" width="1060" height="468" key="AVDManager/0.25.1280.708/1280.25.1920.1055@1280.25.1920.1055" timestamp="1610541922057" />
+    <state x="1789" y="260" key="NewModule_or_Project.wizard" timestamp="1610541884333">
+      <screen x="1280" y="25" width="1920" height="1055" />
+    </state>
+    <state x="1789" y="260" key="NewModule_or_Project.wizard/0.25.1280.708/1280.25.1920.1055@1280.25.1920.1055" timestamp="1610541884333" />
+  </component>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes:.idea/workspace.xml
 </project>
