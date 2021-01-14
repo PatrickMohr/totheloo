@@ -30,12 +30,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 
 
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final String TAG = "MapsActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
+    private static final String DEFAULT_LOCATION_NAME = "Hamburg Toilette 1";
+    private static final double DEFAULT_LOCATION_LAT = 53.5625;
+    private static final double DEFAULT_LOCATION_LNG = 9.9573;
+    private static final String DEFAULT_LOCATION_TITLE = "Erste Test Toilette";
+
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
@@ -71,16 +77,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
         getdevicelocation();
         mMap.setMyLocationEnabled(true);
-        setMarker();
+        setMarker(DEFAULT_LOCATION_LAT,DEFAULT_LOCATION_LNG,DEFAULT_LOCATION_NAME,DEFAULT_LOCATION_TITLE);
 
 
     }
 
-    private void setMarker() {
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        LatLng hamburg = new LatLng(53.5625, 9.9573);
-        mMap.addMarker(new MarkerOptions().position(hamburg).title("Marker in Hamburg"));
+    private void setMarker(double Latitude,double Longitude, String PlaceName, String Title) {
+        LatLng toilet = new LatLng(Latitude, Longitude);
+        mMap.addMarker(new MarkerOptions().position(toilet).title(Title));
     }
 
     private void getdevicelocation() {
