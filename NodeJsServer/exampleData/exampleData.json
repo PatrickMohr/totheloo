@@ -1,0 +1,30 @@
+{
+    "name": "WonderToilet",
+    "price": 0.5,
+    "place": {
+        "longitude": "53.540307",
+        "latitude": "10.021677",
+        "tag": "ItsATag",
+        "navigationDescription": "Just go around the corner where it smells strange!"
+    },
+    "kind": {
+        "description": "Pissoir",
+        "icon": "ItsANIcon"
+    },
+    "rating": [
+        {
+            "user": "Anon",
+            "ratingText": "It was wonderful",
+            "stars": "4"
+        },
+        {
+            "user": "Anon1",
+            "ratingText": "It smelled a bit!",
+            "stars": "2"
+        },{
+            "user": "Anon2",
+            "ratingText": "Like heaven",
+            "stars": "5"
+        }
+    ]
+}
