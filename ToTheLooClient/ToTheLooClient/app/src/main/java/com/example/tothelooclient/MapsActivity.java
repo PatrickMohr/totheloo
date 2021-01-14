@@ -100,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
+                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),DEFAULT_ZOOM);
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -107,11 +108,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         }
                     }
+
                 });
             }
         } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: SecrurityException" + e.getMessage());
         }
+
     }
 
     private void moveCamera(LatLng latLng, float zoom){
