@@ -73,7 +73,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final double DEFAULT_LOCATION_LNG = 9.9573;
     private static final String DEFAULT_LOCATION_TITLE = "Erste Test Toilette";
     private Marker myMarker;
-    ArrayList<MarkerLocation> markerTestListe;
+    private ArrayList<Marker> markerListe;
+    private ArrayList<MarkerLocation> markerTestListe;
+
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -154,6 +156,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
         myMarker =  mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
         myMarker.setTag(toilet);
+
+
     }
 
 
