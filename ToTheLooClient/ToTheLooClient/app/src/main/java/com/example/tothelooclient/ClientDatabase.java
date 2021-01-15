@@ -35,6 +35,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     //Returns true if inserting Data was successful.
     public boolean insertDataAsString(String input) {
+        SQLiteDatabase db = this.getWritableDatabase();
         int id;
         String latitude;
         String longitude;
@@ -51,6 +52,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         rating = Float.parseFloat(data[4]);
         onlyPissior = Boolean.parseBoolean(data[5]);
 
+        db.delete(TABLE_NAME, "id=?", new String[]{Integer.toString(id)});
         return insertData(id, latitude, longitude, price, rating, onlyPissior);
     }
 
@@ -65,6 +67,22 @@ public class ClientDatabase extends SQLiteOpenHelper {
         contentValues.put(COL_6, onlyPissior);
         long res = db.insert(TABLE_NAME, null, contentValues);
         return res != -1;
+    }
+
+    public String extractDataByIDAsString(int id) {
+        Cursor data = extractDataByID(id);
+
+        StringBuffer buffer = new StringBuffer();
+        while(data.moveToNext()) {
+            buffer.append(data.getString(0) + ";");
+            buffer.append(data.getString(1) + ";");
+            buffer.append(data.getString(2) + ";");
+            buffer.append(data.getString(3) + ";");
+            buffer.append(data.getString(4) + ";");
+            buffer.append(data.getString(5));
+        }
+
+        return (buffer.toString());
     }
 
     public Cursor extractDataByID(int id) {
