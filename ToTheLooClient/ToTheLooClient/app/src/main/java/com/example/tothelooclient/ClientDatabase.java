@@ -70,7 +70,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
     }
 
     public String extractDataByIDAsString(int id) {
-        Cursor data = extractDataByID(id);
+        Cursor data = extractDataByIDAsCursorObject(id);
 
         StringBuffer buffer = new StringBuffer();
         while(data.moveToNext()) {
@@ -85,7 +85,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         return (buffer.toString());
     }
 
-    public Cursor extractDataByID(int id) {
+    public Cursor extractDataByIDAsCursorObject(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + " = " + id,null);
     }
