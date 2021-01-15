@@ -69,12 +69,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
-    private static final String DEFAULT_LOCATION_NAME = "Hamburg Toilette 1";
     private static final double DEFAULT_LOCATION_LAT = 53.5625;
     private static final double DEFAULT_LOCATION_LNG = 9.9573;
     private static final String DEFAULT_LOCATION_TITLE = "Erste Test Toilette";
     private Marker myMarker;
-    ArrayList<LatLng> listPoints;
+    ArrayList<MarkerLocation> markerTestListe;
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -90,7 +89,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        listPoints = new ArrayList<>();
+        markerTestListe = new ArrayList<>();
+        markerTestListe.add(new MarkerLocation(53.5625,9.9573,"toilette 1"));
+        markerTestListe.add(new MarkerLocation(53.5725,9.9673,"toilette 2"));
+        markerTestListe.add(new MarkerLocation(53.5825,9.4573,"toilette 3"));
+        markerTestListe.add(new MarkerLocation(56.5625,9.9373,"toilette 4"));
+        markerTestListe.add(new MarkerLocation(53.4625,9.8573,"toilette 5"));
+        markerTestListe.add(new MarkerLocation(53.8625,10.9573,"toilette 6"));
     }
 
 
@@ -108,58 +113,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: map is ready ");
         mMap = googleMap;
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-
-            @Override
-            public void onInfoWindowClick(Marker arg0) {
-                if (arg0 != null && arg0.getTitle().equals("Erste Test Toilette")) {
-                    Intent intent1 = new Intent(MapsActivity.this, MainActivity3.class);
-                    startActivity(intent1);
-                }
-            }
-        });
         getLocationPermission();
         getdevicelocation();
         mMap.setMyLocationEnabled(true);
         // Todo methode für marker aus Datenbank auslesen und erstellen
-        setMarker(DEFAULT_LOCATION_LAT, DEFAULT_LOCATION_LNG, DEFAULT_LOCATION_TITLE);
 
-        // Methode um neue Marker auf die Karte zu setzten;
+        for (MarkerLocation marker : markerTestListe) {
+
+            setMarker(marker.getLatitude(), marker.getLongitude(), marker.getTitle());
+        }
+        // Möglichkeit neue Marker auf die Karte zu setzten;
 
       /*  mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener()
         {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                //Create marker
                 setMarker(latLng.latitude,latLng.longitude,"new Toilette");
-               // MarkerOptions markerOptions = new MarkerOptions();
-               // markerOptions.position(latLng);
-                //Add  marker to the map
-               // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-               // mMap.addMarker(markerOptions);
-                // request get direction code
             }
-
         });
         setMarker(DEFAULT_LOCATION_LAT, DEFAULT_LOCATION_LNG, DEFAULT_LOCATION_TITLE);
    */
-
-
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-
-                if (marker.equals(myMarker))
-                {
+                    if (marker.equals(myMarker)) {
                     openMainActivity3();
                 }
                 return true;
             }
-
-
         });
-
-
     }
 
     public void openMainActivity3() {
@@ -171,7 +153,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng toilet = new LatLng(Latitude, Longitude);
         mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
         myMarker =  mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
-        listPoints.add(toilet);
         myMarker.setTag(toilet);
     }
 
@@ -225,6 +206,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        mLocationPermissionGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++)
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                }
+                Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                mLocationPermissionGranted = true;
+                //initialize our map
+            }
+        }
+    }
+
 
 
     private String getRequestUrl(LatLng start, LatLng dest) {
