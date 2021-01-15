@@ -10,44 +10,28 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-import android.os.Handler;
+
 
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
-
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,17 +47,13 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnMapClickListener {
     private static final String TAG = "MapsActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
-    private static final double DEFAULT_LOCATION_LAT = 53.5625;
-    private static final double DEFAULT_LOCATION_LNG = 9.9573;
-    private static final String DEFAULT_LOCATION_TITLE = "Erste Test Toilette";
-    private Marker myMarker;
-    private ArrayList<Marker> markerListe;
     private ArrayList<MarkerLocation> markerTestListe;
 
 
@@ -118,6 +98,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
         getdevicelocation();
         mMap.setMyLocationEnabled(true);
+        mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
         // Todo methode für marker aus Datenbank auslesen und erstellen
 
         for (MarkerLocation marker : markerTestListe) {
@@ -135,16 +116,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         setMarker(DEFAULT_LOCATION_LAT, DEFAULT_LOCATION_LNG, DEFAULT_LOCATION_TITLE);
    */
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+     /*   mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                    if (marker.equals(myMarker)) {
+                    if (marker.equals()) {
                     openMainActivity3();
                 }
                 return true;
             }
         });
+        */
     }
+
+
 
     public void openMainActivity3() {
         Intent intent = new Intent(this, MainActivity3.class);
@@ -154,10 +138,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void setMarker(double Latitude, double Longitude, String Title) {
         LatLng toilet = new LatLng(Latitude, Longitude);
         mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
-        myMarker =  mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
-        myMarker.setTag(toilet);
-
-
     }
 
 
@@ -289,6 +269,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
+    GoogleMap.OnInfoWindowClickListener MyOnInfoWindowClickListener
+            = new GoogleMap.OnInfoWindowClickListener(){
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            openMainActivity3();
+           /* Toast.makeText(MapsActivity.this,
+                    "onInfoWindowClick():\n" +
+                            marker.getPosition().latitude + "\n" +
+                            marker.getPosition().longitude,
+                    Toast.LENGTH_LONG).show();
+                    */
+        }
+    };
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        Toast.makeText(MapsActivity.this,
+                "onMapClick:\n" + latLng.latitude + " : " + latLng.longitude,
+                Toast.LENGTH_LONG).show();
+    }
+
 
     public class TaskRequestDirection extends AsyncTask<String, Void, String> {
 
