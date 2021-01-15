@@ -24,6 +24,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -68,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final double DEFAULT_LOCATION_LAT = 53.5625;
     private static final double DEFAULT_LOCATION_LNG = 9.9573;
     private static final String DEFAULT_LOCATION_TITLE = "Erste Test Toilette";
+    ArrayList<LatLng> listPoints;
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -83,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        listPoints = new ArrayList<>();
     }
 
 
@@ -103,6 +107,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
         getdevicelocation();
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                //save first point select
+                listPoints.add(latLng);
+                //Create marker
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                //Add  marker to the map
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                mMap.addMarker(markerOptions);
+                // request get direction code
+
+
+            }
+        });
         setMarker(DEFAULT_LOCATION_LAT, DEFAULT_LOCATION_LNG, DEFAULT_LOCATION_NAME, DEFAULT_LOCATION_TITLE);
 
 
@@ -165,17 +185,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private String getRequestUrl(LatLng start, LatLng goal) {
+    private String getRequestUrl(LatLng start, LatLng dest) {
         // value of origin
-        String str_start = "start" + start.latitude + "," + start.longitude;
+        String str_start = "origin" + start.latitude + "," + start.longitude;
         //value of destination
-        String str_goal = "destination" + goal.latitude + "," + goal.longitude;
+        String str_dest = "destination" + dest.latitude + "," + dest.longitude;
         //Set value enable the sensor
         String sensor = "sensor=false";
-        //Mode for find diretion
+        //Mode for find direction
         String mode = "mode=driving";
         //Build the full param
-        String param = str_start + "&" + str_goal + "&" + sensor + "&" + mode;
+        String param = str_start +"&" + str_dest + "&" + sensor +"&" +mode;
         //output format
         String output = "json";
         //create url to request
@@ -232,38 +252,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             return responseString;
         }
-    }
-
-  //  @Override
-  //  protected void onPostExecute(String s) {
-  //      super.onPostExecute(s);
-
-    //      TaskParser taskParser = new TaskParser();
-    //    taskParser.execute(s);
-  //  }
 
 
     @Override
+     protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+       TaskParser taskParser = new TaskParser();
+       taskParser.execute(s);
+      }
+}
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: called.");
+       Log.d(TAG, "onRequestPermissionsResult: called.");
         mLocationPermissionGranted = false;
 
-        switch (requestCode) {
+       switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
+               if (grantResults.length > 0) {
                     for (int i = 0; i < grantResults.length; i++)
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
-                            return;
-                        }
+                       if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                          mLocationPermissionGranted = false;
+                           Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                          return;
                 }
-                Log.d(TAG, "onRequestPermissionsResult: permission granted");
-                mLocationPermissionGranted = true;
-                //initialize our map
+               }
+               Log.d(TAG, "onRequestPermissionsResult: permission granted");
+               mLocationPermissionGranted = true;
+              //initialize our map
             }
-        }
-    }
+       }
+   }
 
     public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
