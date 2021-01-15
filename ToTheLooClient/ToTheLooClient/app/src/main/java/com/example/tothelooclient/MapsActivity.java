@@ -169,8 +169,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setMarker(double Latitude, double Longitude, String Title) {
         LatLng toilet = new LatLng(Latitude, Longitude);
-        mMap.addMarker(new MarkerOptions().position(toilet).title(Title));
-        myMarker =  mMap.addMarker(new MarkerOptions().position(toilet).title(Title));
+        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
+        myMarker =  mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
         listPoints.add(toilet);
         myMarker.setTag(toilet);
     }

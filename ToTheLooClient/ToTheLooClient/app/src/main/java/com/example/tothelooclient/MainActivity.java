@@ -18,15 +18,11 @@ public class MainActivity extends AppCompatActivity {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity2();
+                openMapsActivity();
             }
         });
     }
 
-    public void openMainActivity2() {
-        Intent intent = new Intent(this, MainActivity2.class);
-        startActivity(intent);
-    }
 
     public void openMapsActivity() {
         Intent intent = new Intent(this, MapsActivity.class);
