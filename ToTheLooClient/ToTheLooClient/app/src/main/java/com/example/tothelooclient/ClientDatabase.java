@@ -10,13 +10,22 @@ import androidx.annotation.Nullable;
 
 public class ClientDatabase extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ToiletsLocal.db";
-    public static final String TABLE_NAME = "Toilets_Table";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "Latitude";
-    public static final String COL_3 = "Longitude";
-    public static final String COL_4 = "Price";
-    public static final String COL_5 = "Rating";
-    public static final String COL_6 = "Only_Pissior";
+    public static final String TOILETS_TABLE_NAME = "Toilets_Table";
+    public static final String TOILETS_COL_1 = "ToiletID";
+    public static final String TOILETS_COL_2 = "Name";
+    public static final String TOILETS_COL_3 = "Price";
+    public static final String TOILETS_COL_4 = "Latitude";
+    public static final String TOILETS_COL_5 = "Longitude";
+    public static final String TOILETS_COL_6 = "Tag";
+    public static final String TOILETS_COL_7 = "Navigation_Description";
+    public static final String TOILETS_COL_8 = "Description";
+
+    public static final String RATINGS_TABLE_NAME = "Ratings_Table";
+    public static final String RATINGS_COL_1 = "RatingID";
+    public static final String RATINGS_COL_2 = "User";
+    public static final String RATINGS_COL_3 = "RatingText";
+    public static final String RATINGS_COL_4 = "Stars";
+    public static final String RATINGS_COL_5 = "ToiletID";
 
     public ClientDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -24,69 +33,119 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME+" ("+COL_1+" INTEGER PRIMARY KEY,"+COL_2+" TEXT,"+COL_3+" TEXT,"+COL_4+" FLOAT,"+COL_5+" FLOAT,"+COL_6+" BOOLEAN)");
+        createToiletsTable(db);
+        createRatingsTable(db);
+    }
+
+    private void createToiletsTable(SQLiteDatabase db) {
+        db.execSQL("create table " + TOILETS_TABLE_NAME
+                +" ("+ TOILETS_COL_1 +" INTEGER PRIMARY KEY NOT NULL,"
+                + TOILETS_COL_2+" TEXT,"
+                + TOILETS_COL_3 +" FLOAT,"
+                + TOILETS_COL_4 +" TEXT NOT NULL,"
+                + TOILETS_COL_5 +" TEXT NOT NULL,"
+                + TOILETS_COL_6 +" TEXT, "
+                + TOILETS_COL_7 +" TEXT, "
+                + TOILETS_COL_8 +" TEXT)");
+    }
+
+    private void createRatingsTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + RATINGS_TABLE_NAME
+                +" ("+ RATINGS_COL_1 +" INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + RATINGS_COL_2 +" FLOAT,"
+                + RATINGS_COL_3 +" TEXT,"
+                + RATINGS_COL_4 +" TEXT,"
+                + "FOREIGN KEY (" + RATINGS_COL_5 + ") REFERENCES " + TOILETS_TABLE_NAME+"(" + TOILETS_COL_1 + "))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TOILETS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RATINGS_TABLE_NAME);
         onCreate(db);
     }
 
     //Returns true if inserting Data was successful.
-    public boolean insertDataAsString(String input) {
+    public void insertToiletsAsString(String input) {
         SQLiteDatabase db = this.getWritableDatabase();
         int id;
+        String name;
+        float price;
         String latitude;
         String longitude;
-        float price;
-        float rating;
-        boolean onlyPissior;
+        String tag;
+        String navigationDescription;
+        String description;
 
         String[] data = input.split(";");
 
         id = Integer.parseInt(data[0]);
-        latitude = data[1];
-        longitude = data[2];
-        price = Float.parseFloat(data[3]);
-        rating = Float.parseFloat(data[4]);
-        onlyPissior = Boolean.parseBoolean(data[5]);
+        name = data[1];
+        price = Float.parseFloat(data[2]);
+        latitude = data[3];
+        longitude = data[4];
+        tag = data[5];
+        navigationDescription = data[6];
+        description = data[7];
 
-        db.delete(TABLE_NAME, "id=?", new String[]{Integer.toString(id)});
-        return insertData(id, latitude, longitude, price, rating, onlyPissior);
+        db.delete(TOILETS_TABLE_NAME, "id=?", new String[]{Integer.toString(id)});
+        insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
     }
 
-    private boolean insertData(int id, String latitude, String longitude, float price, float rating, boolean onlyPissior) {
+    private void insertToilets(int id, String name, Float price, String latitude, String longitude, String tag, String navigationDescription, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1, id);
-        contentValues.put(COL_2, latitude);
-        contentValues.put(COL_3, longitude);
-        contentValues.put(COL_4, price);
-        contentValues.put(COL_5, rating);
-        contentValues.put(COL_6, onlyPissior);
-        long res = db.insert(TABLE_NAME, null, contentValues);
-        return res != -1;
+        contentValues.put(TOILETS_COL_1, id);
+        contentValues.put(TOILETS_COL_2, name);
+        contentValues.put(TOILETS_COL_3, price);
+        contentValues.put(TOILETS_COL_4, latitude);
+        contentValues.put(TOILETS_COL_5, longitude);
+        contentValues.put(TOILETS_COL_6, tag);
+        contentValues.put(TOILETS_COL_7, navigationDescription);
+        contentValues.put(TOILETS_COL_8, description);
+
+        db.insert(TOILETS_TABLE_NAME, null, contentValues);
     }
 
-    public String extractDataByIDAsString(int id) {
-        Cursor data = extractDataByIDAsCursorObject(id);
-
-        StringBuffer buffer = new StringBuffer();
-        while(data.moveToNext()) {
-            buffer.append(data.getString(0) + ";");
-            buffer.append(data.getString(1) + ";");
-            buffer.append(data.getString(2) + ";");
-            buffer.append(data.getString(3) + ";");
-            buffer.append(data.getString(4) + ";");
-            buffer.append(data.getString(5));
-        }
-
-        return (buffer.toString());
-    }
-
-    public Cursor extractDataByIDAsCursorObject(int id) {
+    public void insertRatingsAsStringByToiletID(String input) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + " = " + id,null);
+        int toiletID;
+        String user;
+        String ratingText;
+        Float stars;
+
+        String[] data = input.split("\n");
+        for(String i : data) {
+            String[] rating = i.split(";");
+
+            toiletID = Integer.parseInt(rating[0]);
+            user = rating[1];
+            ratingText = rating[2];
+            stars = Float.parseFloat(rating[3]);
+
+            insertRating(toiletID, user, ratingText, stars);
+        }
+    }
+
+    private void insertRating(int toiletID, String user, String ratingText, float stars) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TOILETS_COL_2, user);
+        contentValues.put(TOILETS_COL_3, ratingText);
+        contentValues.put(TOILETS_COL_4, stars);
+        contentValues.put(TOILETS_COL_5, toiletID);
+
+        db.insert(RATINGS_TABLE_NAME, null, contentValues);
+    }
+
+
+    public Cursor extractToiletsByIDAsCursorObject(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + TOILETS_TABLE_NAME + " WHERE " + TOILETS_COL_1 + " = " + id,null);
+    }
+
+    public Cursor extractRatingsByToiletID(int toiletID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + RATINGS_TABLE_NAME + " WHERE " + RATINGS_COL_5 + " = " + toiletID, null);
     }
 }
