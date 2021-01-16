@@ -40,7 +40,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
     private void createToiletsTable(SQLiteDatabase db) {
         db.execSQL("create table " + TOILETS_TABLE_NAME
                 +" ("+ TOILETS_COL_1 +" INTEGER PRIMARY KEY NOT NULL,"
-                + TOILETS_COL_2+" TEXT,"
+                + TOILETS_COL_2 +" TEXT,"
                 + TOILETS_COL_3 +" FLOAT,"
                 + TOILETS_COL_4 +" TEXT NOT NULL,"
                 + TOILETS_COL_5 +" TEXT NOT NULL,"
@@ -108,17 +108,19 @@ public class ClientDatabase extends SQLiteOpenHelper {
     }
 
     public void insertRatingsAsStringByToiletID(String input) {
-        SQLiteDatabase db = this.getWritableDatabase();
         int toiletID;
         String user;
         String ratingText;
         Float stars;
 
-        String[] data = input.split("\n");
+        String[] extractedID = input.split("==");
+
+        toiletID = Integer.parseInt(extractedID[0]);
+
+        String[] data = extractedID[1].split("\n");
         for(String i : data) {
             String[] rating = i.split(";");
 
-            toiletID = Integer.parseInt(rating[0]);
             user = rating[1];
             ratingText = rating[2];
             stars = Float.parseFloat(rating[3]);
