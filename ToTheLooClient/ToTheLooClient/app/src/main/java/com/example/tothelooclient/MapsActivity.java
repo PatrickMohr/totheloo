@@ -10,12 +10,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.inputmethodservice.InputMethodService;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Toast;
+
 
 
 import com.google.android.gms.location.LocationServices;
@@ -84,8 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -107,15 +110,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         // Möglichkeit neue Marker auf die Karte zu setzten;
 
-      /*  mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener()
+         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener()
         {
             @Override
             public void onMapLongClick(LatLng latLng) {
+
+
+
                 setMarker(latLng.latitude,latLng.longitude,"new Toilette");
+
             }
         });
-        setMarker(DEFAULT_LOCATION_LAT, DEFAULT_LOCATION_LNG, DEFAULT_LOCATION_TITLE);
-   */
+
      /*   mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
