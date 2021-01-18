@@ -22,10 +22,10 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     public static final String RATINGS_TABLE_NAME = "Ratings_Table";
     public static final String RATINGS_COL_1 = "RatingID";
-    public static final String RATINGS_COL_2 = "User";
-    public static final String RATINGS_COL_3 = "RatingText";
-    public static final String RATINGS_COL_4 = "Stars";
-    public static final String RATINGS_COL_5 = "ToiletID";
+    public static final String RATINGS_COL_2 = "ToiletID";
+    public static final String RATINGS_COL_3 = "User";
+    public static final String RATINGS_COL_4 = "RatingText";
+    public static final String RATINGS_COL_5 = "Stars";
 
     public ClientDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -39,7 +39,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     private void createToiletsTable(SQLiteDatabase db) {
         db.execSQL("create table " + TOILETS_TABLE_NAME
-                +" ("+ TOILETS_COL_1 +" INTEGER PRIMARY KEY NOT NULL,"
+                +" ("+ TOILETS_COL_1 +" INTEGER PRIMARY KEY,"
                 + TOILETS_COL_2 +" TEXT,"
                 + TOILETS_COL_3 +" FLOAT,"
                 + TOILETS_COL_4 +" TEXT NOT NULL,"
@@ -52,10 +52,11 @@ public class ClientDatabase extends SQLiteOpenHelper {
     private void createRatingsTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + RATINGS_TABLE_NAME
                 +" ("+ RATINGS_COL_1 +" INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + RATINGS_COL_2 +" FLOAT,"
-                + RATINGS_COL_3 +" TEXT,"
+                + RATINGS_COL_2 +" INTEGER NOT NULL,"
+                + RATINGS_COL_3 +" FLOAT,"
                 + RATINGS_COL_4 +" TEXT,"
-                + "FOREIGN KEY (" + RATINGS_COL_5 + ") REFERENCES " + TOILETS_TABLE_NAME+"(" + TOILETS_COL_1 + "))");
+                + RATINGS_COL_5 +" TEXT,"
+                + "FOREIGN KEY (" + RATINGS_COL_2 + ") REFERENCES " + TOILETS_TABLE_NAME+"(" + TOILETS_COL_1 + "))");
     }
 
     @Override
@@ -132,10 +133,10 @@ public class ClientDatabase extends SQLiteOpenHelper {
     private void insertRating(int toiletID, String user, String ratingText, float stars) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(TOILETS_COL_2, user);
-        contentValues.put(TOILETS_COL_3, ratingText);
-        contentValues.put(TOILETS_COL_4, stars);
-        contentValues.put(TOILETS_COL_5, toiletID);
+        contentValues.put(RATINGS_COL_2, toiletID);
+        contentValues.put(RATINGS_COL_3, user);
+        contentValues.put(RATINGS_COL_4, ratingText);
+        contentValues.put(RATINGS_COL_5, stars);
 
         db.insert(RATINGS_TABLE_NAME, null, contentValues);
     }
@@ -148,6 +149,6 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     public Cursor extractRatingsByToiletID(int toiletID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM " + RATINGS_TABLE_NAME + " WHERE " + RATINGS_COL_5 + " = " + toiletID, null);
+        return db.rawQuery("SELECT * FROM " + RATINGS_TABLE_NAME + " WHERE " + RATINGS_COL_2 + " = " + toiletID, null);
     }
 }
