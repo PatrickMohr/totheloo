@@ -66,7 +66,6 @@ public class ClientDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Returns true if inserting Data was successful.
     public void insertToiletsAsString(String input) {
         SQLiteDatabase db = this.getWritableDatabase();
         int id;
@@ -122,9 +121,9 @@ public class ClientDatabase extends SQLiteOpenHelper {
         for(String i : data) {
             String[] rating = i.split(";");
 
-            user = rating[1];
-            ratingText = rating[2];
-            stars = Float.parseFloat(rating[3]);
+            user = rating[0];
+            ratingText = rating[1];
+            stars = Float.parseFloat(rating[2]);
 
             insertRating(toiletID, user, ratingText, stars);
         }
