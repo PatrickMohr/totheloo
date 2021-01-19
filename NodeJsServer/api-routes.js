@@ -11,12 +11,11 @@ router.get('/', function (req, res) {
 var looController = require('./looController');
 // loo routes
 router.route('/loos')
-    .get(looController.index)
+    .get(looController.getAll)
     .post(looController.new);
-router.route('/loos/:loo_id')
-    .get(looController.view)
-    .patch(looController.update)
-    .put(looController.update)
-    .delete(looController.delete);
+router.route('/loos/fetchAllNewVersions')
+    .get(looController.fetchAllNewVersions)
+router.route('/loos/addNewRating/:loo_id')
+    .patch(looController.addRatingToLoo)
 // Export API routes
 module.exports = router;

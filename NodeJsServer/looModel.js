@@ -14,6 +14,14 @@ A Loo can have the following attributes:
 var mongoose = require('mongoose');
 // Setup schema
 var looSchema = mongoose.Schema({
+    id: {
+        type: Number,
+        required: false
+    },
+    version: {
+        type: Number,
+        required: false
+    },
     name: {
         type: String,
         required: false,

@@ -20,7 +20,7 @@ else
 
 
 // Setup server port
-var port = process.env.PORT || 8080;
+var port = 8080;
 
 // Send message for default URL
 app.get('/', (req, res) => res.send('Hello this is the loo server! You are on the root, nothing to see here!'));
