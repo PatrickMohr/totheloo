@@ -138,8 +138,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         markerTestListe = new ArrayList<>();
-        markerTestListe.add(new MarkerLocation(53.5625, 9.9573, "toilette 1" + " Bewertung:" + " 4,5"));
-        markerTestListe.add(new MarkerLocation(53.5725, 9.9673, "toilette 2" + " Bewertung: " + "  5"));
+        markerTestListe.add(new MarkerLocation(53.5625, 9.9573, "toilette 1" + " Bewertung:" + "4,5"));
+        markerTestListe.add(new MarkerLocation(53.5725, 9.9673, "toilette 2" + " Bewertung: " + " 5"));
         markerTestListe.add(new MarkerLocation(53.5825, 9.4573, "toilette 3" + " Bewertung:" + "3,7"));
         markerTestListe.add(new MarkerLocation(56.5625, 9.9373, "toilette 4" + " Bewertung:" + "1,1"));
         markerTestListe.add(new MarkerLocation(53.4625, 9.8573, "toilette 5" + " Bewertung:" + "2,0"));
