@@ -1,9 +1,14 @@
 package com.example.tothelooclient;
 
+import android.graphics.Color;
+
 public class MarkerLocation {
     private double latitude;
     private double longitude;
     private String title;
+    private int id;
+    private String navi;
+    private Color tag;
 
     public MarkerLocation (double Latitude, double Longitude, String Title)
     {
