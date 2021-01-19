@@ -67,7 +67,7 @@ exports.addNewRatingToLoo = function(req, res) {
         if (err)
             res.send(err);
 
-        loo[0].rating.push(req.body.newRating)
+        loo[0].rating.push(req.body)
         loo[0].version = loo[0].version + 1
         Loo.update(
             {id: req.params.loo_id},
