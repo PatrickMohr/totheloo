@@ -32,36 +32,44 @@ public class JSONParser {
             "            \"stars\": \"5\"\n" +
             "        }\n" +
             "    ]\n" +
-            "}" ; //assign the JSON String here
+            "}"; //assign the JSON String here
     JSONObject obj = new JSONObject(jsonString);
+
     public String getName(JSONObject obj) throws JSONException {
         String name = obj.getString("name");
         return name;
     }
+
     public double getprice(JSONObject obj) throws JSONException {
         double price = obj.getDouble("price");
         return price;
     }
+
     public double getLongitude(JSONObject obj) throws JSONException {
         double longitude = obj.getDouble("longitude");
         return longitude;
     }
+
     public double getLatitude(JSONObject obj) throws JSONException {
         double latitude = obj.getDouble("latitude");
         return latitude;
     }
+
     public String getTag(JSONObject obj) throws JSONException {
         String tag = obj.getString("tag");
         return tag;
     }
+
     public String getNavDescr(JSONObject obj) throws JSONException {
         String navDescr = obj.getString("navigationDescription");
         return navDescr;
     }
+
     public String getdescr(JSONObject obj) throws JSONException {
         String descr = obj.getString("description");
         return descr;
     }
+
     public String getIcon(JSONObject obj) throws JSONException {
         String icon = obj.getString("icon");
         return icon;
@@ -76,10 +84,11 @@ public class JSONParser {
             String user = arr.getJSONObject(i).getString("user");
             String ratingText = arr.getJSONObject(i).getString("ratingText");
             String stars = Integer.toString(arr.getJSONObject(i).getInt("stars"));
-            String[] innerArray = {user,ratingText,stars};
+            String[] innerArray = {user, ratingText, stars};
             outerArray[i] = innerArray;
         }
     }
+
 
     public JSONParser() throws JSONException {
     }
