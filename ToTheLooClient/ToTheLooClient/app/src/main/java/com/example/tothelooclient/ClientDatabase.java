@@ -41,7 +41,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         db.execSQL("create table " + TOILETS_TABLE_NAME
                 +" ("+ TOILETS_COL_1 +" INTEGER PRIMARY KEY,"
                 + TOILETS_COL_2 +" TEXT,"
-                + TOILETS_COL_3 +" FLOAT,"
+                + TOILETS_COL_3 +" INTEGER,"
                 + TOILETS_COL_4 +" TEXT NOT NULL,"
                 + TOILETS_COL_5 +" TEXT NOT NULL,"
                 + TOILETS_COL_6 +" TEXT, "
@@ -70,7 +70,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int id;
         String name;
-        float price;
+        int price;
         String latitude;
         String longitude;
         String tag;
@@ -81,18 +81,18 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
         id = Integer.parseInt(data[0]);
         name = data[1];
-        price = Float.parseFloat(data[2]);
+        price = Integer.parseInt(data[2]);
         latitude = data[3];
         longitude = data[4];
         tag = data[5];
         navigationDescription = data[6];
         description = data[7];
 
-        db.delete(TOILETS_TABLE_NAME, "id=?", new String[]{Integer.toString(id)});
+        db.delete(TOILETS_TABLE_NAME, TOILETS_COL_1 + "=?", new String[]{Integer.toString(id)});
         insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
     }
 
-    private void insertToilets(int id, String name, Float price, String latitude, String longitude, String tag, String navigationDescription, String description) {
+    private void insertToilets(int id, String name, int price, String latitude, String longitude, String tag, String navigationDescription, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TOILETS_COL_1, id);
@@ -140,6 +140,39 @@ public class ClientDatabase extends SQLiteOpenHelper {
         db.insert(RATINGS_TABLE_NAME, null, contentValues);
     }
 
+    public String extractAllToiletsAsString(int rating, int price) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars"
+                + " from " + TOILETS_TABLE_NAME + " AS t"
+                + " INNER JOIN " + RATINGS_TABLE_NAME + " AS r ON r." + RATINGS_COL_2 + " = t." + TOILETS_COL_1
+                + " WHERE t." + TOILETS_COL_3 + " <= " + price
+                + " GROUP BY t." + TOILETS_COL_1
+                + " HAVING AVG(r. "+ RATINGS_COL_5 +") >= " + rating, null);
+
+        Cursor loosWithoutRatings = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5
+                + " from " + TOILETS_TABLE_NAME + " AS t"
+                + " where not exists (select * from " + RATINGS_TABLE_NAME + " as r where t." + TOILETS_COL_1 + " = r." + RATINGS_COL_2 + ")" +
+                " AND t." + TOILETS_COL_3 + " <= " + price, null);
+
+        StringBuffer buffer = new StringBuffer();
+        while(loosWithRating.moveToNext()) {
+            buffer.append(loosWithRating.getString(0) + ";");
+            buffer.append(loosWithRating.getString(1) + ";");
+            buffer.append(loosWithRating.getString(2) + ";");
+            buffer.append(loosWithRating.getString(3) + ";");
+            buffer.append(loosWithRating.getString(4) + "\n");
+        }
+
+        while(loosWithoutRatings.moveToNext()) {
+            buffer.append(loosWithoutRatings.getString(0) + ";");
+            buffer.append(loosWithoutRatings.getString(1) + ";");
+            buffer.append(loosWithoutRatings.getString(2) + ";");
+            buffer.append(loosWithoutRatings.getString(3) + ";999\n");
+        }
+
+        return buffer.toString();
+    }
 
     public Cursor extractToiletsByIDAsCursorObject(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
