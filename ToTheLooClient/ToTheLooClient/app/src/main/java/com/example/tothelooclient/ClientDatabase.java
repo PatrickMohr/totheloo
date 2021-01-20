@@ -140,7 +140,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         db.insert(RATINGS_TABLE_NAME, null, contentValues);
     }
 
-    public String extractAllToiletsAsString(int rating, int price) {
+    public String getAllToiletsAsString(int rating, int price) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars"
