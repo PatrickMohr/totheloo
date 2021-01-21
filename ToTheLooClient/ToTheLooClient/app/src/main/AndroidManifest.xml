@@ -50,7 +50,7 @@
         </activity>
         <activity
             android:name=".MapsActivity2"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps2">
             android:parentActivityName=".MainActivity3"
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -59,7 +59,7 @@
 
         <activity
             android:name=".MapsActivity3"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps3">
             android:parentActivityName=".MainActivity3"
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
