@@ -146,21 +146,15 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public void onMapLongClick(LatLng latLng) {
 
+                listPoints.add(latLng);
                 setMarker(latLng.latitude,latLng.longitude,"new Toilette");
-                if (listPoints.size() == 2) {
+                if (listPoints.size() > 1) {
                     listPoints.clear();
                     mMap.clear();
                 }
-                //save first point select
-                listPoints.add(latLng);
-                //Create marker
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-
                 if (listPoints.size() == 1) {
-                    //Add first marker to the map
-
-
+                  setMarker(latLng.latitude,latLng.longitude,"hier name einfügen");
+                }
                 }
         });
 
@@ -175,7 +169,7 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
 
         private void setMarker(double Latitude, double Longitude, String Title) {
             LatLng toilet = new LatLng(Latitude, Longitude);
-            mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
+            mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)));
         }
 
 
