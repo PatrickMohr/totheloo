@@ -90,11 +90,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class MapsActivity3 {
+public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallback {
 
 
-    public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
-            GoogleMap.OnMapClickListener {
+
+
         private static final String TAG = "MapsActivity";
         private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
         private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -348,7 +348,7 @@ public class MapsActivity3 {
 
         @Override
         public void onMapClick(LatLng latLng) {
-            Toast.makeText(MapsActivity.this,
+            Toast.makeText(MapsActivity3.this,
                     "onMapClick:\n" + latLng.latitude + " : " + latLng.longitude,
                     Toast.LENGTH_LONG).show();
         }
@@ -586,6 +586,6 @@ public class MapsActivity3 {
             }
         }
 
-    }
-
 }
+
+
