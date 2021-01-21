@@ -12,16 +12,12 @@ import java.net.URL;
 
 public class ServerCommunicator {
 
-    //private static JSONParser jSONParser;
+    //ClientDatabase clientDatabase = new ClientDatabase(this);
 
-    public static void main(String[] args) throws IOException {
+    public static void pullLoosFromServerToLocalDatabase() throws IOException {
 
-        ServerCommunicator.MyGETRequest();
-        //ServerCommunicator.MyPOSTRequest();
-
-    }
-
-    public static void MyGETRequest() throws IOException {
+        // TODO der will hier irgendein Argument haben
+        ClientDatabase clientDatabase = new ClientDatabase();
 
         JSONParser jSONParser = new JSONParser();
 
@@ -43,11 +39,11 @@ public class ServerCommunicator {
             }
             in .close();
 
-            //print result
-            //System.out.println("JSON String Result: " + response.toString());
             String[] oneLoo = jSONParser.splitAllJSONLoos(response.toString());
-            System.out.println(jSONParser.stringTransformer(oneLoo[0]));
-
+            for (int i = 0; i < oneLoo.length;i++) {
+                //System.out.println(jSONParser.stringTransformer(oneLoo[i]));
+                clientDatabase.insertToiletsAsString(jSONParser.stringTransformer(oneLoo[i]));
+            }
         }
         else {
 
