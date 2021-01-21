@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import org.w3c.dom.Text;
 
 public class MainActivity3 extends AppCompatActivity {
     private Button routeButton;
@@ -16,6 +20,8 @@ public class MainActivity3 extends AppCompatActivity {
     private double currentMarkerLng;
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private TextView nameView;
+    private TextView bewertungView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +36,17 @@ public class MainActivity3 extends AppCompatActivity {
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
 
+
         }
+
         setContentView(R.layout.activity_main3);
+
+        TextView nameView = (TextView) findViewById(R.id.nameView) ;
+        nameView.setText("Name: "+currentMarkerTitle);
+
+        //TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
+        //bewertungView.setText(currentMarkerRating);
+
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
