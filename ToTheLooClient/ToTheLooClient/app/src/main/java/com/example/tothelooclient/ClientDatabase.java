@@ -92,6 +92,8 @@ public class ClientDatabase extends SQLiteOpenHelper {
         insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
     }
 
+    // input format:
+    // {id};{name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}
     private void insertToilets(int id, String name, boolean price, String latitude, String longitude, String tag, String navigationDescription, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -107,6 +109,10 @@ public class ClientDatabase extends SQLiteOpenHelper {
         db.insert(TOILETS_TABLE_NAME, null, contentValues);
     }
 
+    // input format:
+    // {toiletID}==
+    //        {user};{ratingText};{stars}\n
+    //        {user};{ratingText};{stars}\n...
     public void insertRatingsAsStringByToiletID(String input) {
         int toiletID;
         String user;
@@ -127,6 +133,23 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
             insertRating(toiletID, user, ratingText, stars);
         }
+    }
+
+    // input format:
+    // {id}=={name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}=={user};{ratingText};{stars}\n
+    //                                                                                          {user};{ratingText};{stars}\n...
+    public void insertToiletsWithRatings(String input) {
+        String toiletIDString;
+        String toiletString;
+        String ratingsString;
+
+        String[] data = input.split("==");
+
+        toiletIDString = data[0];
+        toiletString = data[1];
+        ratingsString = data[2];
+        insertToiletsAsString(toiletIDString + ";" + toiletString);
+        insertRatingsAsStringByToiletID(toiletIDString + "==" + ratingsString);
     }
 
     private void insertRating(int toiletID, String user, String ratingText, float stars) {
