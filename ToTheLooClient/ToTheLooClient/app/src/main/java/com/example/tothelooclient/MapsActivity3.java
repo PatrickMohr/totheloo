@@ -122,6 +122,8 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
         }
 
 
+
+
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -137,7 +139,7 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             getLocationPermission();
             getdevicelocation();
             mMap.setMyLocationEnabled(true);
-          //  mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
+            mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
             // Möglichkeit neue Marker auf die Karte zu setzten;
 
@@ -147,16 +149,21 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             public void onMapLongClick(LatLng latLng) {
 
                 listPoints.add(latLng);
-                setMarker(latLng.latitude,latLng.longitude,"new Toilette");
+                setMarker(latLng.latitude,latLng.longitude,"Hinzufügen");
                 if (listPoints.size() > 1) {
                     listPoints.clear();
                     mMap.clear();
                 }
                 if (listPoints.size() == 1) {
-                  setMarker(latLng.latitude,latLng.longitude,"hier name einfügen");
+                    Toast.makeText(MapsActivity3.this,
+                            "Zum hinzufügen nochmal auf den Marker Klicken",
+                            Toast.LENGTH_LONG).show();
                 }
+
                 }
         });
+
+
 
         }
 
@@ -166,6 +173,22 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             Intent intent = new Intent(this, MainActivity3.class);
             startActivity(intent);
         }
+
+    GoogleMap.OnInfoWindowClickListener MyOnInfoWindowClickListener
+            = new GoogleMap.OnInfoWindowClickListener(){
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            setResult(MainActivity4.RESULT_OK,
+                    new Intent().putExtra("latitude", marker.getPosition().latitude).putExtra("longitude", marker.getPosition().longitude));
+            finish();
+           /* Toast.makeText(MapsActivity.this,
+                    "onInfoWindowClick():\n" +
+                            marker.getPosition().latitude + "\n" +
+                            marker.getPosition().longitude,
+                    Toast.LENGTH_LONG).show();
+                    */
+        }
+    };
 
         private void setMarker(double Latitude, double Longitude, String Title) {
             LatLng toilet = new LatLng(Latitude, Longitude);

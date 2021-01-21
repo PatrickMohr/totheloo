@@ -2,6 +2,7 @@ package com.example.tothelooclient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 public class MainActivity4 extends AppCompatActivity {
+
+    private static final int REQUEST_GET_MAP_LOCATION = 0;
 
  private Button positionButton;
     @Override
@@ -35,6 +38,18 @@ public class MainActivity4 extends AppCompatActivity {
     public void openMapsActivity3() {
         Intent intent = new Intent(this, MapsActivity3.class);
 
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_GET_MAP_LOCATION);
+    }
+
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_GET_MAP_LOCATION && resultCode == MapsActivity3.RESULT_OK) {
+            int latitude = data.getIntExtra("latitude", 0);
+            int longitude = data.getIntExtra("longitude", 0);
+
+            // do something with B's return values
+        }
     }
 }
