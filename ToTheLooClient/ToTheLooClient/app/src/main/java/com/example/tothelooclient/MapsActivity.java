@@ -110,6 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private ClientDatabase clientDatabase;
 
     //variablen
     private Boolean mLocationPermissionGranted = false;
@@ -144,6 +145,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 openMainActivity4();
             }
         });
+
+        clientDatabase = new ClientDatabase(this);
     }
 
     /**
@@ -167,7 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-      //  ClientDatabase.getAllToiletsAsString(rating,42);
+        clientDatabase.getAllToiletsAsString(rating,42);
 
         String [] toiletten = testString.split("\n");
         for (String string : toiletten) {
