@@ -56,6 +56,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity3" />
         </activity>
+        <activity
+            android:name=".MapsActivity3"
+            android:label="@string/title_activity_maps">
+            android:parentActivityName=".MainActivity4"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity3" />
+        </activity>
+
         <activity android:name=".MainActivity3">
             android:parentActivityName=".MainActivity2"
             <meta-data
