@@ -64,8 +64,12 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
     public void openMainActivity2() {
-        Intent intent = new Intent(this, MainActivity2.class);
-        startActivity(intent);
+        Intent OpenDetails = new Intent(this, MainActivity2.class);
+        OpenDetails.putExtra("Latitude",currentMarkerLat);
+        OpenDetails.putExtra("Longitude",currentMarkerLng);
+        OpenDetails.putExtra("Title",currentMarkerTitle);
+        OpenDetails.putExtra("id",currentMarkerId);
+        startActivity(OpenDetails);
     }
 
 }

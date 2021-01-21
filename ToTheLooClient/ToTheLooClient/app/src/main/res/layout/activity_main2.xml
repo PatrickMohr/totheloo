@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sendeButton" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/ratingEditText"
         android:layout_width="365dp"
         android:layout_height="166dp"
         android:layout_marginStart="20dp"
