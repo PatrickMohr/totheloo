@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class ClientDatabase extends SQLiteOpenHelper {
+    private static ClientDatabase INSTANCE = null;
+
     public static final String DATABASE_NAME = "ToiletsLocal.db";
     public static final String TOILETS_TABLE_NAME = "Toilets_Table";
     public static final String TOILETS_COL_1 = "ToiletID";
@@ -27,8 +29,17 @@ public class ClientDatabase extends SQLiteOpenHelper {
     public static final String RATINGS_COL_4 = "RatingText";
     public static final String RATINGS_COL_5 = "Stars";
 
-    public ClientDatabase(@Nullable Context context) {
+    private ClientDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
+    }
+
+    public static ClientDatabase getFirstInstance(Context context) {
+        INSTANCE = new ClientDatabase(context);
+        return INSTANCE;
+    }
+
+    public static ClientDatabase getInstance() {
+        return INSTANCE;
     }
 
     @Override

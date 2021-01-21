@@ -154,7 +154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             rating = starRating;
         }
 
-        clientDatabase = new ClientDatabase(this);
+        clientDatabase = ClientDatabase.getFirstInstance(this);
     }
 
     /**
