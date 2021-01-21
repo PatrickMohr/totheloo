@@ -12,12 +12,7 @@ import java.net.URL;
 
 public class ServerCommunicator {
 
-    //ClientDatabase clientDatabase = new ClientDatabase(this);
-
     public static void pullLoosFromServerToLocalDatabase() throws IOException {
-
-        // TODO der will hier irgendein Argument haben
-        ClientDatabase clientDatabase = new ClientDatabase();
 
         JSONParser jSONParser = new JSONParser();
 
@@ -42,7 +37,7 @@ public class ServerCommunicator {
             String[] oneLoo = jSONParser.splitAllJSONLoos(response.toString());
             for (int i = 0; i < oneLoo.length;i++) {
                 //System.out.println(jSONParser.stringTransformer(oneLoo[i]));
-                clientDatabase.insertToiletsAsString(jSONParser.stringTransformer(oneLoo[i]));
+                ClientDatabase.getInstance().insertToiletsAsString(jSONParser.stringTransformer(oneLoo[i]));
             }
         }
         else {
