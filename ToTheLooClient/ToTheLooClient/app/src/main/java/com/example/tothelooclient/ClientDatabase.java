@@ -166,17 +166,25 @@ public class ClientDatabase extends SQLiteOpenHelper {
     public String getAllToiletsAsString(int rating, boolean price) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        int booleanPrice;
+
+        if(price = false) {
+            booleanPrice = 0;
+        } else {
+            booleanPrice = 1;
+        }
+
         Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars"
                 + " from " + TOILETS_TABLE_NAME + " AS t"
                 + " INNER JOIN " + RATINGS_TABLE_NAME + " AS r ON r." + RATINGS_COL_2 + " = t." + TOILETS_COL_1
-                + " WHERE t." + TOILETS_COL_3 + " = " + price + " OR t." + TOILETS_COL_3 + " = " + false
+                + " WHERE t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0"
                 + " GROUP BY t." + TOILETS_COL_1
                 + " HAVING AVG(r. " + RATINGS_COL_5 + ") >= " + rating, null);
 
         Cursor loosWithoutRatings = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5
                 + " from " + TOILETS_TABLE_NAME + " AS t"
                 + " where not exists (select * from " + RATINGS_TABLE_NAME + " as r where t." + TOILETS_COL_1 + " = r." + RATINGS_COL_2 + ")"
-                + " AND t." + TOILETS_COL_3 + " = " + price + " OR t." + TOILETS_COL_3 + " = " + false,null);
+                + " AND t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0",null);
 
         StringBuffer buffer = new StringBuffer();
         while(loosWithRating.moveToNext()) {
