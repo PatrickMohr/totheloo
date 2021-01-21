@@ -144,7 +144,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 openMainActivity4();
             }
+
         });
+
+        Bundle details = getIntent().getExtras();
+        if (details != null)
+        {
+            int starRating = details.getInt("ratingInt");
+            rating = starRating;
+        }
 
         clientDatabase = new ClientDatabase(this);
     }
@@ -170,7 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-//        clientDatabase.getAllToiletsAsString(rating,false);
+       String newString = clientDatabase.getAllToiletsAsString(rating,false);
 
         String [] toiletten = testString.split("\n");
         for (String string : toiletten) {

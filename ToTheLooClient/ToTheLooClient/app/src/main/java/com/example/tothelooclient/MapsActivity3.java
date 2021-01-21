@@ -104,6 +104,7 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
 
         private GoogleMap mMap;
         private FusedLocationProviderClient mFusedLocationProviderClient;
+        private ArrayList<LatLng> listPoints;
 
         //variablen
         private Boolean mLocationPermissionGranted = false;
@@ -117,6 +118,7 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
+            listPoints = new ArrayList<>();
         }
 
 
@@ -144,11 +146,22 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public void onMapLongClick(LatLng latLng) {
 
-
-
                 setMarker(latLng.latitude,latLng.longitude,"new Toilette");
+                if (listPoints.size() == 2) {
+                    listPoints.clear();
+                    mMap.clear();
+                }
+                //save first point select
+                listPoints.add(latLng);
+                //Create marker
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
 
-            }
+                if (listPoints.size() == 1) {
+                    //Add first marker to the map
+
+
+                }
         });
 
         }
