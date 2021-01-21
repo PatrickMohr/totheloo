@@ -18,7 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToTheLooClient">
-        <activity android:name=".MainActivity4"></activity>
+        <activity android:name=".MainActivity4">
+
+            android:parentActivityName=".MapsActivity"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

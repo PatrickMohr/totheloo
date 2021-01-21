@@ -38,7 +38,7 @@
             android:id="@+id/switch1"
             android:layout_width="match_parent"
             android:layout_height="59dp"
-            android:text="Nur Pissoir" />
+            android:text="Pissoir" />
 
         <Switch
             android:id="@+id/switch2"
@@ -48,7 +48,7 @@
 
         <Spinner
             android:id="@+id/spinner1"
-            android:layout_width="match_parent"
+            android:layout_width="347dp"
             android:layout_height="67dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
