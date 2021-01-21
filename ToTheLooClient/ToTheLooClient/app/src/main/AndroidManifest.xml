@@ -60,7 +60,7 @@
         <activity
             android:name=".MapsActivity3"
             android:label="@string/title_activity_maps3">
-            android:parentActivityName=".MainActivity3"
+            android:parentActivityName=".MainActivity4"
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity4" />
