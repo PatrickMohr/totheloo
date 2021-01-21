@@ -37,6 +37,12 @@ public class ClientDatabase extends SQLiteOpenHelper {
         createRatingsTable(db);
     }
 
+    public void deleteTables() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TOILETS_TABLE_NAME, null, null);
+        db.delete(RATINGS_TABLE_NAME, null, null);
+    }
+
     private void createToiletsTable(SQLiteDatabase db) {
         db.execSQL("create table " + TOILETS_TABLE_NAME
                 +" ("+ TOILETS_COL_1 +" INTEGER PRIMARY KEY,"
