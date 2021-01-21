@@ -15,6 +15,7 @@ public class MainActivity3 extends AppCompatActivity {
     private double currentMarkerLat;
     private double currentMarkerLng;
     private String currentMarkerTitle;
+    private String currentMarkerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +24,11 @@ public class MainActivity3 extends AppCompatActivity {
             double markerLat = extras.getDouble("Latitude");
             double markerLng = extras.getDouble("Longitude");
             String markerTitle = extras.getString("Title");
+            String markerId = extras.getString("id");
             currentMarkerLat = markerLat;
             currentMarkerLng = markerLng;
             currentMarkerTitle = markerTitle;
+            currentMarkerId = markerId;
 
             //The key argument here must match that used in the other activity
         }
@@ -34,7 +37,7 @@ public class MainActivity3 extends AppCompatActivity {
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMapsActivity2();
+                    openMapsActivity2();
             }
         });
         rateButton = (Button) findViewById(R.id.rateButton);

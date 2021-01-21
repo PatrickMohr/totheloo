@@ -92,6 +92,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -102,8 +103,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
     private ArrayList<MarkerLocation> markerTestListe;
+    private Map<Marker, String> markerHashMap;
     private String testString;
-    private Location standpunkt;
+
 
 
     private GoogleMap mMap;
@@ -116,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double currentMarkerLat;
     private double currentMarkerLng;
     private String currentMarkerTitle;
+    private String currentMarkerId;
 
 
 
@@ -132,6 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mapFragment.getMapAsync(this);
 
+        markerHashMap = new HashMap<>();
         markerTestListe = new ArrayList<>();
        /* markerTestListe.add(new MarkerLocation(53.5625, 9.9573, "toilette 1" + " Bewertung:" + "4,5"));
         markerTestListe.add(new MarkerLocation(53.5725, 9.9673, "toilette 2" + " Bewertung: " + " 5"));
@@ -157,6 +161,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: map is ready ");
+        int i = 0;
         mMap = googleMap;
         getLocationPermission();
         getdevicelocation();
@@ -205,7 +210,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
              {
 
 
-                setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating);
+                setMarker(++i,Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating,id);
 
             }
         }
@@ -224,6 +229,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerDetails.putExtra("Latitude",currentMarkerLat);
         markerDetails.putExtra("Longitude",currentMarkerLng);
         markerDetails.putExtra("Title",currentMarkerTitle);
+        markerDetails.putExtra("id",currentMarkerId);
         startActivity(markerDetails);
     }
 
@@ -234,6 +240,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             currentMarkerLat = marker.getPosition().latitude;
             currentMarkerLng = marker.getPosition().longitude;
             currentMarkerTitle = marker.getTitle();
+            currentMarkerId = markerHashMap.get(marker);
 
             openMainActivity3();
            /* Toast.makeText(MapsActivity.this,
@@ -248,9 +255,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    private void setMarker(double Latitude, double Longitude, String Title, String snip) {
+    private void setMarker(int markerNumber,double Latitude, double Longitude, String Title, String snip, String id) {
         LatLng toilet = new LatLng(Latitude, Longitude);
-        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)).snippet(snip));
+    Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)).snippet(snip));
+    markerHashMap.put(m,id);
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
@@ -279,7 +287,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-                            currentLocation = standpunkt;
+
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
