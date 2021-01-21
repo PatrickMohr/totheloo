@@ -105,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final float DEFAULT_ZOOM = 15f;
     private Map<Marker, String> markerHashMap;
     private String testString;
-
+    private ClientDatabase clientDatabase;
 
     private Button addButton;
 
@@ -114,6 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //variablen
     private Boolean mLocationPermissionGranted = false;
+    private int rating;
 
     //currentMarker
     private double currentMarkerLat;
@@ -135,12 +136,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
-
         markerHashMap = new HashMap<>();
-
-        testString = "42;WonderLoo;53.5625;9.9573;4,5 \n 43;easyfalls;53.5725;9.9673;5 \n 44;Quite Place;53.5825;9.4573;3,7 \n 45;Sprinkler Anlage;56.5625;9.9373;1,1 \n 46;Das Geschäft;53.4625;9.8573;2,0  \n 47;Lass es Krachen;53.8625;10.9573;4,7"
-        ;
-
+        testString = "42;WonderLoo;53.5625;9.9573;4,5 \n 43;easyfalls;53.5725;9.9673;5 \n 44;Quite Place;53.5825;9.4573;3,7 \n 45;Sprinkler Anlage;56.5625;9.9373;1,1 \n 46;Das Geschäft;53.4625;9.8573;2,0  \n 47;Lass es Krachen;53.8625;10.9573;4,7";
         addButton = (Button) findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +145,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 openMainActivity4();
             }
         });
-
     }
 
     /**
@@ -163,7 +159,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: map is ready ");
-        int i = 0;
         mMap = googleMap;
         getLocationPermission();
         getdevicelocation();
@@ -173,6 +168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
+        clientDatabase.getAllToiletsAsString(rating,42);
 
         String [] toiletten = testString.split("\n");
         for (String string : toiletten) {
@@ -183,7 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String Lng = parts [3];
             String Rating = parts [4];
              {
-                setMarker(++i,Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating,id);
+                setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating,id);
             }
         }
     }
@@ -224,7 +220,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    private void setMarker(int markerNumber,double Latitude, double Longitude, String Title, String snip, String id) {
+    private void setMarker(double Latitude, double Longitude, String Title, String snip, String id) {
         LatLng toilet = new LatLng(Latitude, Longitude);
     Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)).snippet(snip));
     markerHashMap.put(m,id);
