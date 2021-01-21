@@ -103,6 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final float DEFAULT_ZOOM = 15f;
     private ArrayList<MarkerLocation> markerTestListe;
     private String testString;
+    private Location standpunkt;
 
 
     private GoogleMap mMap;
@@ -200,7 +201,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String Lng = parts [3];
             String Rating = parts [4];
 
-            setMarker(Double.parseDouble(Lat),Double.parseDouble(Lng),name +" "+"Bewertung:"+" "+ Rating);
+
+             {
+
+
+                setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating);
+
+            }
         }
 
 
@@ -241,9 +248,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    private void setMarker(double Latitude, double Longitude, String Title) {
+    private void setMarker(double Latitude, double Longitude, String Title, String snip) {
         LatLng toilet = new LatLng(Latitude, Longitude);
-        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
+        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)).snippet(snip));
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
@@ -272,6 +279,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            currentLocation = standpunkt;
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
