@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.Float3;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -131,14 +132,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         markerTestListe = new ArrayList<>();
-        markerTestListe.add(new MarkerLocation(53.5625, 9.9573, "toilette 1" + " Bewertung:" + "4,5"));
+       /* markerTestListe.add(new MarkerLocation(53.5625, 9.9573, "toilette 1" + " Bewertung:" + "4,5"));
         markerTestListe.add(new MarkerLocation(53.5725, 9.9673, "toilette 2" + " Bewertung: " + " 5"));
         markerTestListe.add(new MarkerLocation(53.5825, 9.4573, "toilette 3" + " Bewertung:" + "3,7"));
         markerTestListe.add(new MarkerLocation(56.5625, 9.9373, "toilette 4" + " Bewertung:" + "1,1"));
         markerTestListe.add(new MarkerLocation(53.4625, 9.8573, "toilette 5" + " Bewertung:" + "2,0"));
         markerTestListe.add(new MarkerLocation(53.8625, 10.9573, "toilette 6" + " Bewertung:" + "4,7"));
-
-        testString = "42;WonderLoo;53.5625;9.9573;4,5";
+  */
+        testString = "42;WonderLoo;53.5625;9.9573;4,5 \n 43;easyfalls;53.5725;9.9673;5 \n 44;Quite Place;53.5825;9.4573;3,7 \n 45;Sprinkler Anlage;56.5625;9.9373;1,1 \n 46;Das Geschäft;53.4625;9.8573;2,0  \n 47;Lass es Krachen;53.8625;10.9573;4,7"
+        ;
 
     }
 
@@ -163,25 +165,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-        String [] parts = testString.split(";");
+      /*  String [] toiletten = testString.split("\n");
+        String string1 = toiletten [0];
+        String string2 = toiletten [1];
+        String [] parts = string1.split(";");
         String id = parts [0];
         String name = parts [1];
         String Lat = parts [2];
         String Lng = parts [3];
         String Rating = parts [4];
+        String [] parts2 = string2.split(";");
+        String id2 = parts2 [0];
+        String name2 = parts2 [1];
+        String Lat2 = parts2 [2];
+        String Lng2 = parts2 [3];
+        String Rating2 = parts2 [4];
 
         double value1 = Double.parseDouble(Lat);
         double value2 = Double.parseDouble(Lng);
+        double value3 = Double.parseDouble(Lat2);
+        double value4 = Double.parseDouble(Lng2);
 
         MarkerLocation testMarker = new MarkerLocation(Double.parseDouble(Lat),Double.parseDouble(Lng),name +" "+ "Bewertung:"+" "+ Rating);
-
+        MarkerLocation testMarker2 = new MarkerLocation(Double.parseDouble(Lat2),Double.parseDouble(Lng2),name2 +" "+ "Bewertung:"+" "+ Rating2);
         setMarker(value1,value2,testMarker.getTitle());
+        setMarker(value3,value4,testMarker2.getTitle()); */
 
-     /*   for (MarkerLocation marker : markerTestListe) {
+        String [] toiletten = testString.split("\n");
+        for (String string : toiletten) {
+            String [] parts = string.split(";");
+            String id = parts [0];
+            String name = parts [1];
+            String Lat = parts [2];
+            String Lng = parts [3];
+            String Rating = parts [4];
+
+            setMarker(Double.parseDouble(Lat),Double.parseDouble(Lng),name +" "+"Bewertung:"+" "+ Rating);
+        }
+
+
+      /*  for (MarkerLocation marker : markerTestListe) {
 
             setMarker(marker.getLatitude(), marker.getLongitude(), marker.getTitle());
-        } */
-
+        }
+     */
     }
 
 
