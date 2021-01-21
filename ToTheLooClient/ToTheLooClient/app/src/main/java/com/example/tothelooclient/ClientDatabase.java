@@ -66,6 +66,8 @@ public class ClientDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // input format:
+    // {id};{name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}
     public void insertToiletsAsString(String input) {
         SQLiteDatabase db = this.getWritableDatabase();
         int id;
@@ -92,8 +94,6 @@ public class ClientDatabase extends SQLiteOpenHelper {
         insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
     }
 
-    // input format:
-    // {id};{name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}
     private void insertToilets(int id, String name, boolean price, String latitude, String longitude, String tag, String navigationDescription, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
