@@ -105,7 +105,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final float DEFAULT_ZOOM = 15f;
     private Map<Marker, String> markerHashMap;
     private String testString;
-    private ClientDatabase clientDatabase;
 
     private Button addButton;
 
@@ -168,7 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-        clientDatabase.getAllToiletsAsString(rating,42);
+        ClientDatabase.getAllToiletsAsString(rating,42);
 
         String [] toiletten = testString.split("\n");
         for (String string : toiletten) {
