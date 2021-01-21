@@ -12,6 +12,8 @@ import java.net.URL;
 
 public class ServerCommunicator {
 
+    //private static JSONParser jSONParser;
+
     public static void main(String[] args) throws IOException {
 
         ServerCommunicator.MyGETRequest();
@@ -21,12 +23,12 @@ public class ServerCommunicator {
 
     public static void MyGETRequest() throws IOException {
 
-        URL urlForGetRequest = new URL("basePath/api/loos");
+        JSONParser jSONParser = new JSONParser();
+
+        URL urlForGetRequest = new URL("http://ec2-18-159-109-98.eu-central-1.compute.amazonaws.com:8080/api/loos");
         String readLine = null;
         HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
         connection.setRequestMethod("GET");
-        //connection.setRequestProperty("userId","a1bcdef"); // set userId its a sample here
-        connection.setRequestProperty("name","WonderToilet"); // set userId its a sample here
         int responseCode = connection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -42,13 +44,14 @@ public class ServerCommunicator {
             in .close();
 
             //print result
-            System.out.println("JSON String Result " + response.toString());
-            //ServerCommunicator.POSTRequest(response.toString());
+            //System.out.println("JSON String Result: " + response.toString());
+            String[] oneLoo = jSONParser.splitAllJSONLoos(response.toString());
+            System.out.println(jSONParser.stringTransformer(oneLoo[0]));
 
         }
         else {
 
-            System.out.println("GET NOT WORKED");
+            System.out.println("GET DIDNT WORK");
 
         }
 
