@@ -66,6 +66,8 @@ public class ClientDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // input format:
+    // {id};{name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}
     public void insertToiletsAsString(String input) {
         SQLiteDatabase db = this.getWritableDatabase();
         int id;
@@ -107,6 +109,10 @@ public class ClientDatabase extends SQLiteOpenHelper {
         db.insert(TOILETS_TABLE_NAME, null, contentValues);
     }
 
+    // input format:
+    // {toiletID}==
+    //        {user};{ratingText};{stars}\n
+    //        {user};{ratingText};{stars}\n...
     public void insertRatingsAsStringByToiletID(String input) {
         int toiletID;
         String user;
@@ -129,6 +135,23 @@ public class ClientDatabase extends SQLiteOpenHelper {
         }
     }
 
+    // input format:
+    // {id}=={name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}=={user};{ratingText};{stars}\n
+    //                                                                                          {user};{ratingText};{stars}\n...
+    public void insertToiletsWithRatings(String input) {
+        String toiletIDString;
+        String toiletString;
+        String ratingsString;
+
+        String[] data = input.split("==");
+
+        toiletIDString = data[0];
+        toiletString = data[1];
+        ratingsString = data[2];
+        insertToiletsAsString(toiletIDString + ";" + toiletString);
+        insertRatingsAsStringByToiletID(toiletIDString + "==" + ratingsString);
+    }
+
     private void insertRating(int toiletID, String user, String ratingText, float stars) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -143,17 +166,25 @@ public class ClientDatabase extends SQLiteOpenHelper {
     public String getAllToiletsAsString(int rating, boolean price) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        int booleanPrice;
+
+        if(price = false) {
+            booleanPrice = 0;
+        } else {
+            booleanPrice = 1;
+        }
+
         Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars"
                 + " from " + TOILETS_TABLE_NAME + " AS t"
                 + " INNER JOIN " + RATINGS_TABLE_NAME + " AS r ON r." + RATINGS_COL_2 + " = t." + TOILETS_COL_1
-                + " WHERE t." + TOILETS_COL_3 + " = " + price
+                + " WHERE t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0"
                 + " GROUP BY t." + TOILETS_COL_1
-                + " HAVING AVG(r. "+ RATINGS_COL_5 +") >= " + rating, null);
+                + " HAVING AVG(r. " + RATINGS_COL_5 + ") >= " + rating, null);
 
         Cursor loosWithoutRatings = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5
                 + " from " + TOILETS_TABLE_NAME + " AS t"
-                + " where not exists (select * from " + RATINGS_TABLE_NAME + " as r where t." + TOILETS_COL_1 + " = r." + RATINGS_COL_2 + ")" +
-                " AND t." + TOILETS_COL_3 + " = " + price, null);
+                + " where not exists (select * from " + RATINGS_TABLE_NAME + " as r where t." + TOILETS_COL_1 + " = r." + RATINGS_COL_2 + ")"
+                + " AND t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0",null);
 
         StringBuffer buffer = new StringBuffer();
         while(loosWithRating.moveToNext()) {

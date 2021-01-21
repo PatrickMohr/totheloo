@@ -26,14 +26,14 @@ public class MainActivity4 extends AppCompatActivity {
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMapsActivity();
+                openMapsActivity3();
             }
         });
     }
 
 
-    public void openMapsActivity() {
-        Intent intent = new Intent(this, MapsActivity.class);
+    public void openMapsActivity3() {
+        Intent intent = new Intent(this, MapsActivity3.class);
 
         startActivity(intent);
     }

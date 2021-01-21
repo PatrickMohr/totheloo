@@ -30,7 +30,6 @@ public class MainActivity3 extends AppCompatActivity {
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
 
-            //The key argument here must match that used in the other activity
         }
         setContentView(R.layout.activity_main3);
         routeButton = (Button) findViewById(R.id.routeButton);
