@@ -106,10 +106,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Map<Marker, String> markerHashMap;
     private String testString;
 
-
-
-
-
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private ClientDatabase clientDatabase;
@@ -180,8 +176,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-       String newString = clientDatabase.getAllToiletsAsString(rating,false);
+       String newString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
 
+      // String [] toiletten = newString.split("\n");
         String [] toiletten = testString.split("\n");
         for (String string : toiletten) {
             String [] parts = string.split(";");
