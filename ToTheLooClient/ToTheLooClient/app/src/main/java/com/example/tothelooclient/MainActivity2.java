@@ -31,7 +31,7 @@ public class MainActivity2 extends AppCompatActivity {
         TextView textviewSendRating = (TextView) findViewById(R.id.textViewSendRating);
 
 
-        ClientDatabase.getInstance();
+
 
         sendeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +52,8 @@ public class MainActivity2 extends AppCompatActivity {
     }
     public void sendRating() {
 
+
+        clientDatabase = ClientDatabase.getInstance();
         Intent OpenDetails = getIntent();
         toiletId = OpenDetails.getStringExtra("id");
 
@@ -59,7 +61,7 @@ public class MainActivity2 extends AppCompatActivity {
         ratingText = reT.getText().toString();
 
         ratingZahl = String.valueOf(ratingBar2.getRating());
-        //clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl+"\n");
+        clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl);
     }
 
 
