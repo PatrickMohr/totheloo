@@ -20,8 +20,7 @@ public class MainActivity3 extends AppCompatActivity {
     private double currentMarkerLng;
     private String currentMarkerTitle;
     private String currentMarkerId;
-    private TextView nameView;
-    private TextView bewertungView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
