@@ -36,10 +36,10 @@
         android:layout_width="164dp"
         android:layout_height="141dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/toilette" />
@@ -66,18 +66,18 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/kostenView"
-            android:layout_width="349dp"
-            android:layout_height="88dp"
-            android:text="Kosten"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
-
-        <TextView
             android:id="@+id/bewertungView"
             android:layout_width="match_parent"
             android:layout_height="88dp"
             android:text="Bewertung : X/5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/kostenView"
+            android:layout_width="349dp"
+            android:layout_height="88dp"
+            android:text="Kostenpflichtig"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp" />
 

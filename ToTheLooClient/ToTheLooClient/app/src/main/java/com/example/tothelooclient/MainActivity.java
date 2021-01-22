@@ -22,12 +22,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         pissoirSwitch = (Switch) findViewById(R.id.pissoirSwitch);
         barrierefreiSwitch = (Switch) findViewById(R.id.barrierefreiSwitch);
         kostenSwitch = (Switch) findViewById(R.id.kostenSwitch);
         mainButton = (Button) findViewById(R.id.mainButton);
+        addButton = (Button) findViewById(R.id.addButton);
+
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addButton = (Button) findViewById(R.id.addButton);
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
 

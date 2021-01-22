@@ -20,6 +20,7 @@ public class MainActivity3 extends AppCompatActivity {
     private double currentMarkerLng;
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private int rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +31,12 @@ public class MainActivity3 extends AppCompatActivity {
             double markerLng = extras.getDouble("Longitude");
             String markerTitle = extras.getString("Title");
             String markerId = extras.getString("id");
+            int starRating = extras.getInt("rating");
             currentMarkerLat = markerLat;
             currentMarkerLng = markerLng;
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
+            rating = starRating;
 
 
         }
@@ -43,8 +46,8 @@ public class MainActivity3 extends AppCompatActivity {
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
         nameView.setText("Name: "+currentMarkerTitle);
 
-        //TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
-        //bewertungView.setText(currentMarkerRating);
+        TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
+        bewertungView.setText("Bewertung: "+rating+" / 5");
 
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {

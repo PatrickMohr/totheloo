@@ -16,7 +16,7 @@ public class MainActivity2 extends AppCompatActivity {
     private String toiletId;
     private String ratingText;
     private String ratingZahl;
-    RatingBar ratingBar;
+    RatingBar ratingBar2;
     private ClientDatabase clientDatabase;
 
 
@@ -26,9 +26,9 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        final RatingBar ratingBar2 = (RatingBar) findViewById(R.id.ratingBar2);
+        ratingBar2 = (RatingBar) findViewById(R.id.ratingBar2);
         Button sendeButton = (Button) findViewById(R.id.sendeButton);
-        final TextView textviewSendRating = (TextView) findViewById(R.id.textViewSendRating);
+        TextView textviewSendRating = (TextView) findViewById(R.id.textViewSendRating);
 
         sendeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +48,13 @@ public class MainActivity2 extends AppCompatActivity {
 
                //clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl+"\n");
                 textviewSendRating.setText("Bewertung abgeschickt!");
+                finish();
             }
         });
 
 
     }
+
+
 
 }

@@ -203,6 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerDetails.putExtra("Longitude",currentMarkerLng);
         markerDetails.putExtra("Title",currentMarkerTitle);
         markerDetails.putExtra("id",currentMarkerId);
+        markerDetails.putExtra("rating",rating);
         startActivity(markerDetails);
     }
 
