@@ -178,8 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
        String toilettenString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
 
-      // String [] toiletten = toilettenSring.split("\n");
-        String [] toiletten = testString.split("\n");
+       String [] toiletten = toilettenString.split("\n");
         for (String string : toiletten) {
             String [] parts = string.split(";");
             String id = parts [0];
@@ -200,7 +199,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerDetails.putExtra("Longitude",currentMarkerLng);
         markerDetails.putExtra("Title",currentMarkerTitle);
         markerDetails.putExtra("id",currentMarkerId);
-        markerDetails.putExtra("rating",rating);
         startActivity(markerDetails);
     }
 
@@ -215,12 +213,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             currentMarkerTitle = marker.getTitle();
             currentMarkerId = markerHashMap.get(marker);
             openMainActivity3();
-           /* Toast.makeText(MapsActivity.this,
-                    "onInfoWindowClick():\n" +
-                            marker.getPosition().latitude + "\n" +
-                            marker.getPosition().longitude,
-                    Toast.LENGTH_LONG).show();
-                    */
         }
     };
 
@@ -229,8 +221,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setMarker(double Latitude, double Longitude, String Title, String snip, String id) {
         LatLng toilet = new LatLng(Latitude, Longitude);
-    Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)).snippet(snip));
-    markerHashMap.put(m,id);
+        Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)).snippet(snip));
+        markerHashMap.put(m,id);
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
@@ -245,8 +237,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.LENGTH_LONG).show();
     }
 
-    private void getdevicelocation() {
 
+    private void getdevicelocation() {
         Log.d(TAG, "getdevicelocation: getting the devices current location");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try {
@@ -260,21 +252,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
-
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapsActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
-
                         }
                     }
-
                 });
             }
         } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: SecrurityException" + e.getMessage());
         }
-
     }
+
+
     private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permission");
         String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -288,7 +278,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
-
-
-
 }
