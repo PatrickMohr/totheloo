@@ -129,7 +129,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
     // input format:
     // {toiletID}==
     //        {user};{ratingText};{stars}\n
-    //        {user};{ratingText};{stars}\n...
+    //        {user};{ratingText};{stars}...
     public void insertRatingsAsStringByToiletID(String input) {
         int toiletID;
         String user;
@@ -154,7 +154,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
 
     // input format:
     // {id}=={name};{price};{latitude};{longitude};{tag};{navigationDescription};{description}=={user};{ratingText};{stars}\n
-    //                                                                                          {user};{ratingText};{stars}\n...
+    //                                                                                          {user};{ratingText};{stars}...
     public void insertToiletsWithRatings(String input) {
         String toiletIDString;
         String toiletString;
