@@ -46,7 +46,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-                //clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl+"\n");
+               //clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl+"\n");
                 textviewSendRating.setText("Bewertung abgeschickt!");
             }
         });

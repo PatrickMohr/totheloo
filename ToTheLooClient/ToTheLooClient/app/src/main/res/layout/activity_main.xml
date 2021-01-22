@@ -6,26 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Switch
-        android:id="@+id/kostenSwitch2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="32dp"
-        android:text="Pissoir anzeigen"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainButton" />
-
     <Button
         android:id="@+id/mainButton"
         android:layout_width="0dp"
         android:layout_height="140dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="238dp"
+        android:layout_marginTop="152dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/design_default_color_error"
         android:text="Ich Muss Mal"
@@ -35,27 +21,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/kostenSwitch"
+        android:id="@+id/kostenSwitch2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="132dp"
         android:layout_marginEnd="32dp"
-        android:text="Kostenfrei"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainButton" />
-
-    <Switch
-        android:id="@+id/barrierefreiSwitch"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="32dp"
-        android:text="Barrierefrei"
+        android:text="Pissoir anzeigen"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -66,7 +38,7 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="124dp"
         android:layout_marginEnd="4dp"
         android:numStars="5"
         android:scaleX="0.8"
@@ -77,12 +49,26 @@
 
         />
 
+    <Switch
+        android:id="@+id/barrierefreiSwitch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="32dp"
+        android:text="Barrierefrei"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainButton" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="132dp"
         android:layout_marginEnd="8dp"
         android:text="Bewertung"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -91,5 +77,29 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kostenSwitch" />
+
+    <Switch
+        android:id="@+id/kostenSwitch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="32dp"
+        android:text="Kostenfrei"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainButton" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="171dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="50dp"
+        android:text="Toilette Hinzufügen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
