@@ -30,31 +30,37 @@ public class MainActivity2 extends AppCompatActivity {
         Button sendeButton = (Button) findViewById(R.id.sendeButton);
         TextView textviewSendRating = (TextView) findViewById(R.id.textViewSendRating);
 
+
+        ClientDatabase.getInstance();
+
         sendeButton.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
 
-                ClientDatabase.getInstance();
-                Intent OpenDetails = getIntent();
-                toiletId = OpenDetails.getStringExtra("id");
-
-                EditText reT = (EditText) findViewById(R.id.ratingEditText) ;
-                ratingText = reT.getText().toString();
-
-                ratingZahl = String.valueOf(ratingBar2.getRating());
 
 
 
-               //clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl+"\n");
+                sendRating();
+
                 textviewSendRating.setText("Bewertung abgeschickt!");
-                finish();
+                //finish();
             }
         });
 
 
     }
+    public void sendRating() {
 
+        Intent OpenDetails = getIntent();
+        toiletId = OpenDetails.getStringExtra("id");
+
+        EditText reT = (EditText) findViewById(R.id.ratingEditText) ;
+        ratingText = reT.getText().toString();
+
+        ratingZahl = String.valueOf(ratingBar2.getRating());
+        //clientDatabase.insertRatingsAsStringByToiletID(toiletId+"=="+"Anonym"+";"+ratingText+";"+ratingZahl+"\n");
+    }
 
 
 }

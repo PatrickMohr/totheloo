@@ -20,8 +20,9 @@ public class MainActivity3 extends AppCompatActivity {
     private double currentMarkerLng;
     private String currentMarkerTitle;
     private String currentMarkerId;
-    private int rating;
 
+    private int id;
+    private ClientDatabase clientDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,23 +32,28 @@ public class MainActivity3 extends AppCompatActivity {
             double markerLng = extras.getDouble("Longitude");
             String markerTitle = extras.getString("Title");
             String markerId = extras.getString("id");
-            int starRating = extras.getInt("rating");
+
             currentMarkerLat = markerLat;
             currentMarkerLng = markerLng;
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
-            rating = starRating;
+
 
 
         }
 
+
         setContentView(R.layout.activity_main3);
+
+        id = Integer.parseInt(currentMarkerId);
+        ClientDatabase.getInstance();
+        //clientDatabase.extractToiletsByIDAsCursorObject(id);
 
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
         nameView.setText("Name: "+currentMarkerTitle);
 
         TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
-        bewertungView.setText("Bewertung: "+rating+" / 5");
+        bewertungView.setText("Bewertung: "+"4"+" / 5");
 
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
