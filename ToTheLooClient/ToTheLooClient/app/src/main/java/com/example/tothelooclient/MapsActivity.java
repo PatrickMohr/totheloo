@@ -176,9 +176,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-       String newString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
+       String toilettenString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
 
-      // String [] toiletten = newString.split("\n");
+      // String [] toiletten = toilettenSring.split("\n");
         String [] toiletten = testString.split("\n");
         for (String string : toiletten) {
             String [] parts = string.split(";");
