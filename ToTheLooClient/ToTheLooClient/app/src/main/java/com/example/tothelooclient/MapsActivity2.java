@@ -324,11 +324,14 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + key;
 
+        //travelling mode
+        String mode = "walking";
+
         // Output format
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters+"&"+mode;
 
         return url;
     }

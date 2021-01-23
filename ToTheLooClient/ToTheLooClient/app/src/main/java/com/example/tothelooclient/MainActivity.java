@@ -26,7 +26,7 @@ import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity {
     private Button mainButton;
-    private ServerConnector serverConnector;
+ //   private ServerConnector serverConnector;
     int ratingInt;
     private Button addButton;
     private Switch kostenSwitch;

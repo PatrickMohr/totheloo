@@ -45,8 +45,8 @@ public class MainActivity3 extends AppCompatActivity {
 
         setContentView(R.layout.activity_main3);
 
-        id = Integer.parseInt(currentMarkerId);
-        ClientDatabase.getInstance();
+//        id = Integer.parseInt(currentMarkerId);
+ //       ClientDatabase.getInstance();
         //clientDatabase.extractToiletsByIDAsCursorObject(id);
 
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
