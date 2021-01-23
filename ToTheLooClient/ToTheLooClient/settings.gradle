@@ -1,2 +1,3 @@
 include ':app'
 rootProject.name = "ToTheLooClient"
+include 'gson:2.8.6'
