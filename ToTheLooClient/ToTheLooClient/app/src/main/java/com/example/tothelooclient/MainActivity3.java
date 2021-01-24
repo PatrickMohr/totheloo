@@ -14,12 +14,19 @@ import com.google.android.gms.maps.model.LatLng;
 import org.w3c.dom.Text;
 
 public class MainActivity3 extends AppCompatActivity {
+
     private Button routeButton;
     private Button rateButton;
+
     private double currentMarkerLat;
     private double currentMarkerLng;
+
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private String name;
+    private String name2;
+    private String name3;
+    private String name4;
 
     private int id;
     private ClientDatabase clientDatabase;
@@ -45,15 +52,35 @@ public class MainActivity3 extends AppCompatActivity {
 
         setContentView(R.layout.activity_main3);
 
-//        id = Integer.parseInt(currentMarkerId);
- //       ClientDatabase.getInstance();
-        //clientDatabase.extractToiletsByIDAsCursorObject(id);
+        id = Integer.parseInt(currentMarkerId);
+
+        clientDatabase =  ClientDatabase.getInstance();
+
+        clientDatabase.extractToiletsByIDAsCursorObject(id);
 
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
         nameView.setText("Name: "+currentMarkerTitle);
 
         TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
         bewertungView.setText("Bewertung: "+"4"+" / 5");
+
+        /*try{
+
+            Cursor cursor = clientDatabase.extractRatingsByToiletID(id);
+
+            if (cursor.moveToPosition(4)) {
+
+                name = cursor.getString(1);
+                name2 = cursor.getString(2);
+                name3 = cursor.getString(3);
+                name4 = cursor.getString(4;
+                nameView.setText("Name: "+name+name2+name3+name4);
+            }
+            cursor.close();
+        } catch (SQLException e) {
+
+        }
+*/
 
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
