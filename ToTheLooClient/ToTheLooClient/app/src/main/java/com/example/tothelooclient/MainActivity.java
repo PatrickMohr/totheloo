@@ -12,21 +12,13 @@ import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.Response;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+
+import static com.example.tothelooclient.ServerCommunicator.pullLoosFromServerToLocalDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private Button mainButton;
- //   private ServerConnector serverConnector;
     int ratingInt;
     private Button addButton;
     private Switch kostenSwitch;
@@ -37,29 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TODO: put this code in an own class
-        OkHttpClient client = new OkHttpClient.Builder()
-                .build();
-        String url = "http://18.197.143.96:8080/api/loos";
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                if(response.isSuccessful()) {
-                    //TODO: format data in a way the MapActivity can handle it!
-                    String myResponse = response.body().string();
-                    System.out.println(myResponse);
-                }
-            }
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-        });
+        getDataFromBackend();
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         pissoirSwitch = (Switch) findViewById(R.id.pissoirSwitch);
@@ -101,6 +71,23 @@ public class MainActivity extends AppCompatActivity {
     public void openMainActivity4() {
         Intent intent = new Intent(this, MainActivity4.class);
         startActivity(intent);
+    }
+
+
+    private void getDataFromBackend() {
+        HttpRequestThread httpThread = new HttpRequestThread();
+        httpThread.start();
+    }
+
+    class HttpRequestThread extends Thread {
+        @Override
+        public void run() {
+            try {
+                pullLoosFromServerToLocalDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
