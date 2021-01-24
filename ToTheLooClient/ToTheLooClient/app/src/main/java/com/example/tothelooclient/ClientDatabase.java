@@ -111,7 +111,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
     }
 
-    private void insertToilets(int id, String name, boolean price, String latitude, String longitude, String tag, String navigationDescription, String description) {
+    public void insertToilets(int id, String name, boolean price, String latitude, String longitude, String tag, String navigationDescription, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TOILETS_COL_1, id);
@@ -122,8 +122,12 @@ public class ClientDatabase extends SQLiteOpenHelper {
         contentValues.put(TOILETS_COL_6, tag);
         contentValues.put(TOILETS_COL_7, navigationDescription);
         contentValues.put(TOILETS_COL_8, description);
+        try {
+            db.insertOrThrow(TOILETS_TABLE_NAME, null, contentValues);
 
-        db.insert(TOILETS_TABLE_NAME, null, contentValues);
+        } catch ( android.database.SQLException e) {
+            System.out.println("Loo with id " + String.valueOf(id) + " does already exists. I did not add it to the database!");
+        }
     }
 
     // input format:

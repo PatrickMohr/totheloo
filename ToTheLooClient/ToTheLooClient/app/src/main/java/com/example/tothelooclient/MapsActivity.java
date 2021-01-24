@@ -95,6 +95,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.tothelooclient.ServerCommunicator.pullLoosFromServerToLocalDatabase;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMapClickListener {
@@ -153,6 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         clientDatabase = ClientDatabase.getFirstInstance(this);
+        getDataFromBackend();
     }
 
     /**
@@ -177,8 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
        String toilettenString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
-       String [] toiletten = testString.split("\n");
-     //  String [] toiletten = toilettenString.split("\n");
+       String [] toiletten = toilettenString.split("\n");
         for (String string : toiletten) {
             String [] parts = string.split(";");
             String id = parts [0];
@@ -276,6 +278,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         } else {
             ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void getDataFromBackend() {
+        HttpRequestThread httpThread = new HttpRequestThread();
+        httpThread.start();
+    }
+
+    class HttpRequestThread extends Thread {
+
+        public void run() {
+            try {
+                pullLoosFromServerToLocalDatabase();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

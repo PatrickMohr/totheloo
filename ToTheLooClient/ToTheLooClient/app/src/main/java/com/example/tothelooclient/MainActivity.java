@@ -12,6 +12,8 @@ import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 
 
@@ -29,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getDataFromBackend();
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         pissoirSwitch = (Switch) findViewById(R.id.pissoirSwitch);
@@ -71,23 +72,6 @@ public class MainActivity extends AppCompatActivity {
     public void openMainActivity4() {
         Intent intent = new Intent(this, MainActivity4.class);
         startActivity(intent);
-    }
-
-
-    private void getDataFromBackend() {
-        HttpRequestThread httpThread = new HttpRequestThread();
-        httpThread.start();
-    }
-
-    class HttpRequestThread extends Thread {
-        @Override
-        public void run() {
-            try {
-                pullLoosFromServerToLocalDatabase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
 
