@@ -178,20 +178,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
        String toilettenString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
      //  String [] toiletten = testString.split("\n");
-        if (toilettenString.length() != 0)
-        {
-       String [] toiletten = toilettenString.split("\n");
-        for (String string : toiletten) {
-            String[] parts = string.split(";");
-            String id = parts[0];
-            String name = parts[1];
-            String Lat = parts[2];
-            String Lng = parts[3];
-            String Rating = parts[4];
-            {
-                setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+        if (toilettenString.length() != 0) {
+            String[] toiletten = toilettenString.split("\n");
+            for (String string : toiletten) {
+                String[] parts = string.split(";");
+                String id = parts[0];
+                String name = parts[1];
+                String Lat = parts[2];
+                String Lng = parts[3];
+                String Rating = parts[4];
+                {
+                    setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+                }
             }
-        }
         }
     }
 
@@ -216,6 +215,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             currentMarkerTitle = marker.getTitle();
             currentMarkerId = markerHashMap.get(marker);
             openMainActivity3();
+
         }
     };
 
