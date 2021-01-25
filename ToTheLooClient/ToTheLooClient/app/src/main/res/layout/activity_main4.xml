@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/editTextNewToiletName"
             android:layout_width="match_parent"
             android:layout_height="73dp"
             android:ems="10"
