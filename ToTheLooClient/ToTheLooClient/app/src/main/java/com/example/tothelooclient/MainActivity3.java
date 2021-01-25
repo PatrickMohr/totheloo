@@ -3,23 +3,26 @@ package com.example.tothelooclient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import org.w3c.dom.Text;
 
 public class MainActivity3 extends AppCompatActivity {
     private Button routeButton;
     private Button rateButton;
+
     private double currentMarkerLat;
     private double currentMarkerLng;
+
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private String kosten;
+    private String tag;
+
+
 
     private int id;
     private ClientDatabase clientDatabase;
@@ -45,16 +48,43 @@ public class MainActivity3 extends AppCompatActivity {
 
         setContentView(R.layout.activity_main3);
 
-//        id = Integer.parseInt(currentMarkerId);
- //       ClientDatabase.getInstance();
-        //clientDatabase.extractToiletsByIDAsCursorObject(id);
+        id = Integer.parseInt(currentMarkerId);
+
+        clientDatabase =  ClientDatabase.getInstance();
+
+        clientDatabase.getToiletsByIDAsCursorObject(id);
 
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
         nameView.setText("Name: "+currentMarkerTitle);
 
         TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
-        bewertungView.setText("Bewertung: "+"4"+" / 5");
+        TextView tagView = (TextView) findViewById(R.id.tagView) ;
+        TextView kostenView = (TextView) findViewById(R.id.kostenView) ;
 
+
+        try{
+
+            Cursor cursor = clientDatabase.getToiletsByIDAsCursorObject(id);
+
+            if (cursor.moveToFirst()) {
+
+                kosten = cursor.getString(2);
+                tag = cursor.getString(5);
+
+                if (kosten.equals("1")) {
+                    kostenView.setText("Kostenpflichtig: Ja");
+                }
+                else {
+                    kostenView.setText("Kostenpflichtig: Nein");
+
+                }
+
+                tagView.setText("Tag: "+ tag);
+            }
+            cursor.close();
+        } catch (SQLException e) {
+
+        }
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
