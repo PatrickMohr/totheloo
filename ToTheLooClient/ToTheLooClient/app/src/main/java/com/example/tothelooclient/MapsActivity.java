@@ -190,6 +190,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String Lat = parts[2];
             String Lng = parts[3];
             String Rating = parts[4];
+            if(Rating.equals("999"))
+            {
+                Rating = "keine Bewertung";
+            }
             {
                 setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
             }
