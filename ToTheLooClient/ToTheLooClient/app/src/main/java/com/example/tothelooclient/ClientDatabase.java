@@ -226,12 +226,12 @@ public class ClientDatabase extends SQLiteOpenHelper {
         return buffer.toString();
     }
 
-    public Cursor extractToiletsByIDAsCursorObject(int id) {
+    public Cursor getToiletsByIDAsCursorObject(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + TOILETS_TABLE_NAME + " WHERE " + TOILETS_COL_1 + " = " + id,null);
     }
 
-    public Cursor extractRatingsByToiletID(int toiletID) {
+    public Cursor getRatingsByToiletID(int toiletID) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + RATINGS_TABLE_NAME + " WHERE " + RATINGS_COL_2 + " = " + toiletID, null);
     }
