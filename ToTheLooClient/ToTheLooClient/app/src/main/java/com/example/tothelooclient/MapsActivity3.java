@@ -1,6 +1,7 @@
 package com.example.tothelooclient;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
@@ -178,8 +179,10 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
             = new GoogleMap.OnInfoWindowClickListener(){
         @Override
         public void onInfoWindowClick(Marker marker) {
-            setResult(MainActivity4.RESULT_OK,
-                    new Intent().putExtra("latitude", marker.getPosition().latitude).putExtra("longitude", marker.getPosition().longitude));
+                    Intent resultIntent = new Intent().putExtra("latitude",
+                            marker.getPosition().latitude).putExtra("longitude",
+                            marker.getPosition().longitude);
+            setResult(Activity.RESULT_OK, resultIntent);
             finish();
            /* Toast.makeText(MapsActivity.this,
                     "onInfoWindowClick():\n" +

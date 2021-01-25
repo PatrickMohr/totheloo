@@ -3,6 +3,7 @@ package com.example.tothelooclient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +17,11 @@ public class MainActivity4 extends AppCompatActivity {
     private static final int REQUEST_GET_MAP_LOCATION = 0;
     private Button fertigButton;
     private Button positionButton;
-    //private ClientDatabase clientdatabase;
+    private ClientDatabase clientdatabase;
     private String id;
+
+    private double markerLatitude;
+    private double markerLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +62,23 @@ public class MainActivity4 extends AppCompatActivity {
 
     public void addToilette() {
 
-        Toast.makeText(getApplicationContext(), "Toilette hinzugefügt",Toast.LENGTH_LONG).show();
-       // ClientDatabase.getInstance();
-        //clientdatabase.insertToiletsAsString(id);
+        Toast.makeText(getApplicationContext(), "Toilette hinzugefügt", Toast.LENGTH_LONG).show();
+        ClientDatabase.getInstance();
+        clientdatabase.insertToiletsAsString(id);
 
     }
 
-    @SuppressLint("MissingSuperCall")
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_GET_MAP_LOCATION && resultCode == MapsActivity3.RESULT_OK) {
-            int latitude = data.getIntExtra("latitude", 0);
-            int longitude = data.getIntExtra("longitude", 0);
-            id = String.valueOf(latitude)+String.valueOf(longitude);
-            // do something with B's return values
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (REQUEST_GET_MAP_LOCATION): {
+                if (resultCode == Activity.RESULT_OK) {
+                    markerLatitude = data.getDoubleExtra("latitude",0);
+                    markerLongitude = data.getDoubleExtra("longitude", 0);
+                }
+                break;
+            }
         }
     }
 }
