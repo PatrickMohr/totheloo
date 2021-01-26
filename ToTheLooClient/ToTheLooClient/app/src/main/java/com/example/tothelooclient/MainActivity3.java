@@ -43,9 +43,6 @@ public class MainActivity3 extends AppCompatActivity {
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
             currentRating = makerRating;
-
-
-
         }
 
 
