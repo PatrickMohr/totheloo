@@ -170,7 +170,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
     private void setMarker(double Latitude, double Longitude, String Title) {
         LatLng toilet = new LatLng(Latitude, Longitude);
-        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_wc_mf)));
+        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)));
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
