@@ -63,7 +63,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
                 + TOILETS_COL_5 +" TEXT NOT NULL,"
                 + TOILETS_COL_6 +" TEXT, "
                 + TOILETS_COL_7 +" TEXT, "
-                + TOILETS_COL_8 +" TEXT)");
+                + TOILETS_COL_8 +" BOOLEAN)");
     }
 
     private void createRatingsTable(SQLiteDatabase db) {
@@ -94,7 +94,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
         String longitude;
         String tag;
         String navigationDescription;
-        String description;
+        boolean description;
 
         String[] data = input.split(";");
 
@@ -105,13 +105,13 @@ public class ClientDatabase extends SQLiteOpenHelper {
         longitude = data[4];
         tag = data[5];
         navigationDescription = data[6];
-        description = data[7];
+        description = Boolean.parseBoolean(data[7]);
 
         db.delete(TOILETS_TABLE_NAME, TOILETS_COL_1 + "=?", new String[]{Integer.toString(id)});
         insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
     }
 
-    public void insertToilets(int id, String name, boolean price, String latitude, String longitude, String tag, String navigationDescription, String description) {
+    public void insertToilets(int id, String name, boolean price, String latitude, String longitude, String tag, String navigationDescription, boolean description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TOILETS_COL_1, id);
@@ -184,6 +184,8 @@ public class ClientDatabase extends SQLiteOpenHelper {
         db.insert(RATINGS_TABLE_NAME, null, contentValues);
     }
 
+    // output format:
+    // {id};{name};{latitude};{longitude};{averageRating};{description}
     public String getAllToiletsAsString(int rating, boolean price) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -195,14 +197,14 @@ public class ClientDatabase extends SQLiteOpenHelper {
             booleanPrice = 1;
         }
 
-        Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars"
+        Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars t." + TOILETS_COL_8
                 + " from " + TOILETS_TABLE_NAME + " AS t"
                 + " INNER JOIN " + RATINGS_TABLE_NAME + " AS r ON r." + RATINGS_COL_2 + " = t." + TOILETS_COL_1
                 + " WHERE t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0"
                 + " GROUP BY t." + TOILETS_COL_1
                 + " HAVING AVG(r. " + RATINGS_COL_5 + ") >= " + rating, null);
 
-        Cursor loosWithoutRatings = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5
+        Cursor loosWithoutRatings = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", t." + TOILETS_COL_8
                 + " from " + TOILETS_TABLE_NAME + " AS t"
                 + " where not exists (select * from " + RATINGS_TABLE_NAME + " as r where t." + TOILETS_COL_1 + " = r." + RATINGS_COL_2 + ")"
                 + " AND t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0",null);
@@ -213,14 +215,16 @@ public class ClientDatabase extends SQLiteOpenHelper {
             buffer.append(loosWithRating.getString(1) + ";");
             buffer.append(loosWithRating.getString(2) + ";");
             buffer.append(loosWithRating.getString(3) + ";");
-            buffer.append(loosWithRating.getString(4) + "\n");
+            buffer.append(loosWithRating.getString(4) + ";");
+            buffer.append(loosWithRating.getString(5) + "\n");
         }
 
         while(loosWithoutRatings.moveToNext()) {
             buffer.append(loosWithoutRatings.getString(0) + ";");
             buffer.append(loosWithoutRatings.getString(1) + ";");
             buffer.append(loosWithoutRatings.getString(2) + ";");
-            buffer.append(loosWithoutRatings.getString(3) + ";999\n");
+            buffer.append(loosWithoutRatings.getString(3) + ";999;");
+            buffer.append(loosWithoutRatings.getString(4) + "\n");
         }
 
         return buffer.toString();
