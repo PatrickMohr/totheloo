@@ -198,14 +198,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             {
                 Rating = "keine Bewertung";
             }
-            if (Type.equals(0))
+
+            if (Type.equals("WC"))
             {
                 setMarkerToilette(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
             }
             else
                 {
                     setMarkerPissoir(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
-                }
+                } 
         }
         }
     }
