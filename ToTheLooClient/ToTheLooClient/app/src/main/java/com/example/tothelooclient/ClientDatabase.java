@@ -197,7 +197,7 @@ public class ClientDatabase extends SQLiteOpenHelper {
             booleanPrice = 1;
         }
 
-        Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars t." + TOILETS_COL_8
+        Cursor loosWithRating = db.rawQuery("select t." + TOILETS_COL_1 + ", t." + TOILETS_COL_2 + ", t." + TOILETS_COL_4 + ", t." + TOILETS_COL_5 + ", ROUND(AVG(r." + RATINGS_COL_5 + "),2)" + " AS averageStars, t." + TOILETS_COL_8
                 + " from " + TOILETS_TABLE_NAME + " AS t"
                 + " INNER JOIN " + RATINGS_TABLE_NAME + " AS r ON r." + RATINGS_COL_2 + " = t." + TOILETS_COL_1
                 + " WHERE t." + TOILETS_COL_3 + " = " + booleanPrice + " OR t." + TOILETS_COL_3 + " = 0"
