@@ -58,6 +58,7 @@ public class MainActivity3 extends AppCompatActivity {
         nameView.setText("Name: "+currentMarkerTitle);
 
         TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
+        bewertungView.setText("Bewertung: "+currentRating);
         TextView tagView = (TextView) findViewById(R.id.tagView) ;
         TextView kostenView = (TextView) findViewById(R.id.kostenView) ;
 
