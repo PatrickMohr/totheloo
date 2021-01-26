@@ -19,6 +19,7 @@ public class MainActivity3 extends AppCompatActivity {
 
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private String currentRating;
     private String kosten;
     private String tag;
 
@@ -35,11 +36,13 @@ public class MainActivity3 extends AppCompatActivity {
             double markerLng = extras.getDouble("Longitude");
             String markerTitle = extras.getString("Title");
             String markerId = extras.getString("id");
+            String makerRating = extras.getString("rating");
 
             currentMarkerLat = markerLat;
             currentMarkerLng = markerLng;
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
+            currentRating = makerRating;
 
 
 

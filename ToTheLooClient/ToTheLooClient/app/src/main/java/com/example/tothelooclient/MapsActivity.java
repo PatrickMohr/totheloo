@@ -124,6 +124,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double currentMarkerLng;
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private String currentSnipp;
+    private String currentRating;
 
 
 
@@ -208,6 +210,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerDetails.putExtra("Longitude",currentMarkerLng);
         markerDetails.putExtra("Title",currentMarkerTitle);
         markerDetails.putExtra("id",currentMarkerId);
+        markerDetails.putExtra("rating",currentRating);
         startActivity(markerDetails);
     }
 
@@ -221,6 +224,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             currentMarkerLng = marker.getPosition().longitude;
             currentMarkerTitle = marker.getTitle();
             currentMarkerId = markerHashMap.get(marker);
+            currentSnipp = marker.getSnippet();
+            String [] getBew = currentSnipp.split(":");
+            currentRating = getBew [1];
             openMainActivity3();
         }
     };
