@@ -145,16 +145,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerHashMap = new HashMap<>();
         testString = "42;WonderLoo;53.5625;9.9573;4,5 \n 43;easyfalls;53.5725;9.9673;5 \n 44;Quite Place;53.5825;9.4573;3,7 \n 45;Sprinkler Anlage;56.5625;9.9373;1,1 \n 46;Das Geschäft;53.4625;9.8573;2,0  \n 47;Lass es Krachen;53.8625;10.9573;4,7";
 
-
-        boolean kostenIsChecked = getIntent().getBooleanExtra("kostenSwitch", false);
-        boolean barrierefreiIsChecked = getIntent().getBooleanExtra("barrierefreiSwitch", false);
-        boolean pissoirIsChecked = getIntent().getBooleanExtra("pissoirSwitch", false);
-
         Bundle details = getIntent().getExtras();
         if (details != null)
         {
-            int starRating = details.getInt("ratingInt");
-            rating = starRating;
+         kostenIsChecked = getIntent().getBooleanExtra("kostenSwitch", false);
+         barrierefreiIsChecked = getIntent().getBooleanExtra("barrierefreiSwitch", false);
+         pissoirIsChecked = getIntent().getBooleanExtra("pissoirSwitch",false);
+         rating = details.getInt("ratingInt");
         }
 
         clientDatabase = ClientDatabase.getFirstInstance(this);
@@ -203,10 +200,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             {
                 setMarkerToilette(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
             }
-            else
-                {
+            if(pissoirIsChecked == true && (Type.equals("Pissoir"))) {
                     setMarkerPissoir(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
-                } 
+
+            }
         }
         }
     }
