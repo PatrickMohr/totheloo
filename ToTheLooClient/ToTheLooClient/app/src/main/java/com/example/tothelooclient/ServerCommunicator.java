@@ -72,7 +72,7 @@ public class ServerCommunicator {
         org.json.JSONObject kindJsonObject = (JSONObject) jsonLooObject.get("kind");
         String description = kindJsonObject.getString("description");
 
-        ClientDatabase.getInstance().insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
+        //ClientDatabase.getInstance().insertToilets(id, name, price, latitude, longitude, tag, navigationDescription, description);
 
     }
 
