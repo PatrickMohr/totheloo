@@ -193,13 +193,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String Lat = parts[2];
             String Lng = parts[3];
             String Rating = parts[4];
+            String Type = parts [5];
             if(Rating.equals("999"))
             {
                 Rating = "keine Bewertung";
             }
+            if (Type.equals(0))
             {
-                setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+                setMarkerToilette(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
             }
+            else
+                {
+                    setMarkerPissoir(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+                }
         }
         }
     }
@@ -235,9 +241,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    private void setMarker(double Latitude, double Longitude, String Title, String snip, String id) {
+    private void setMarkerToilette(double Latitude, double Longitude, String Title, String snip, String id) {
         LatLng toilet = new LatLng(Latitude, Longitude);
         Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)).snippet(snip));
+        markerHashMap.put(m,id);
+    }
+
+    private void setMarkerPissoir(double Latitude, double Longitude, String Title, String snip, String id) {
+        LatLng toilet = new LatLng(Latitude, Longitude);
+        Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.urinal_icon)).snippet(snip));
         markerHashMap.put(m,id);
     }
 
