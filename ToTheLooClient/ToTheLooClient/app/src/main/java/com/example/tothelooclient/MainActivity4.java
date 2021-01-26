@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import static java.lang.Math.round;
+
 public class MainActivity4 extends AppCompatActivity {
 
     private static final int REQUEST_GET_MAP_LOCATION = 0;
@@ -29,6 +31,9 @@ public class MainActivity4 extends AppCompatActivity {
     private Switch kostenSwitch;
     private Switch barriereSwitch;
     private Switch pissoirSwitch;
+
+    private int latitudeInt;
+    private int longitudeInt;
 
     private String name;
     private String id;
@@ -76,7 +81,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 if(latitudeString != null){
                     addToilette();
-                    finish();
+                   finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Bitte Standort hinzufügen",Toast.LENGTH_LONG).show();
 
@@ -162,8 +167,8 @@ public class MainActivity4 extends AppCompatActivity {
         onCheckedChangedBarrierefrei(barriereSwitch);
         onCheckedChangedPissoir(pissoirSwitch);
 
-        id = String.valueOf(markerLatitude)+String.valueOf(markerLongitude);
-        //clientdatabase.insertToiletsAsString(id+";"+name+";"+kosten+";"+latitudeString+";"+longitudeString+";"+tag+";"+"sth"+";"+"sth");
+
+        clientdatabase.insertToiletsAsString(id+";"+name+";"+kosten+";"+latitudeString+";"+longitudeString+";"+tag+";"+"sth"+";"+"sth");
         Toast.makeText(getApplicationContext(), "Toilette hinzugefügt",Toast.LENGTH_LONG).show();
 
     }
@@ -176,8 +181,14 @@ public class MainActivity4 extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     markerLatitude = data.getDoubleExtra("latitude",0);
                     markerLongitude = data.getDoubleExtra("longitude", 0);
+
+                    latitudeInt = (int) Math.round(markerLatitude * 1000);
+                    longitudeInt = (int) Math.round(markerLongitude * 1000);
+
                     longitudeString = String.valueOf(markerLongitude);
                     latitudeString = String.valueOf(markerLatitude);
+
+                    id = String.valueOf(latitudeInt)+String.valueOf(longitudeInt);
                 }
                 break;
             }
