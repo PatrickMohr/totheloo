@@ -127,6 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String currentSnipp;
     private String currentRating;
 
+// false kein pissoir
 
 
     @Override
