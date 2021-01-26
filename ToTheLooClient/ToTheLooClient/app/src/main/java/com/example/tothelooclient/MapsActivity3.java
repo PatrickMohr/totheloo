@@ -163,9 +163,6 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
 
                 }
         });
-
-
-
         }
 
 
@@ -184,12 +181,6 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
                             marker.getPosition().longitude);
             setResult(Activity.RESULT_OK, resultIntent);
             finish();
-           /* Toast.makeText(MapsActivity.this,
-                    "onInfoWindowClick():\n" +
-                            marker.getPosition().latitude + "\n" +
-                            marker.getPosition().longitude,
-                    Toast.LENGTH_LONG).show();
-                    */
         }
     };
 
@@ -273,23 +264,6 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
                 }
             }
         }
-
-
-   /*     GoogleMap.OnInfoWindowClickListener MyOnInfoWindowClickListener
-                = new GoogleMap.OnInfoWindowClickListener(){
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                openMainActivity3();
-            Toast.makeText(MapsActivity.this,
-                    "onInfoWindowClick():\n" +
-                            marker.getPosition().latitude + "\n" +
-                            marker.getPosition().longitude,
-                    Toast.LENGTH_LONG).show();
-
-            }
-        }; */
-
-
         }
 
 
