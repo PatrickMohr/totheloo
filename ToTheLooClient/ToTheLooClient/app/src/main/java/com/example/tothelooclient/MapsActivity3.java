@@ -241,7 +241,6 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
                 }
                 Log.d(TAG, "onRequestPermissionsResult: permission granted");
                 mLocationPermissionGranted = true;
-                //initialize our map
             }
         }
     }
