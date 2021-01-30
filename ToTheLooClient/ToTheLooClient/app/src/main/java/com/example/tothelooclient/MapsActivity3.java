@@ -94,100 +94,84 @@ import java.util.HashMap;
 public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallback {
 
 
+    private static final String TAG = "MapsActivity3";
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private static final float DEFAULT_ZOOM = 15f;
 
 
-        private static final String TAG = "MapsActivity3";
-        private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-        private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-        private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-        private static final float DEFAULT_ZOOM = 15f;
+    private GoogleMap mMap;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private ArrayList<LatLng> listPoints;
 
 
-        private GoogleMap mMap;
-        private FusedLocationProviderClient mFusedLocationProviderClient;
-        private ArrayList<LatLng> listPoints;
-
-        //variablen
-        private Boolean mLocationPermissionGranted = false;
+    private Boolean mLocationPermissionGranted = false;
 
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_maps);
-            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-            listPoints = new ArrayList<>();
-        }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        listPoints = new ArrayList<>();
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady: map is ready ");
+        mMap = googleMap;
+        getLocationPermission();
+        getdevicelocation();
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
 
-
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * If Google Play services is not installed on the device, the user will be prompted to install
-         * it inside the SupportMapFragment. This method will only be triggered once the user has
-         * installed Google Play services and returned to the app.
-         */
-        @SuppressLint("MissingPermission")
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            Log.d(TAG, "onMapReady: map is ready ");
-            mMap = googleMap;
-            getLocationPermission();
-            getdevicelocation();
-            mMap.setMyLocationEnabled(true);
-            mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
-
-            // Möglichkeit neue Marker auf die Karte zu setzten;
-
-         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener()
-        {
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-
+                // wenn noch kein Marker auf der Map gesetzt wurde.
                 listPoints.add(latLng);
-                setMarker(latLng.latitude,latLng.longitude,"Hinzufügen");
-                if (listPoints.size() > 1) {
-                    listPoints.clear();
-                    mMap.clear();
-                }
-                if (listPoints.size() == 1) {
+                if (listPoints.size() == 0) {
+                    setMarker(latLng.latitude, latLng.longitude, "Hinzufügen");
                     Toast.makeText(MapsActivity3.this,
                             "Zum hinzufügen nochmal auf den Marker Klicken",
                             Toast.LENGTH_LONG).show();
                 }
 
+                // Wenn schon ein Marker auf der Map gesetzt wurde.
+                if (listPoints.size() > 1) {
+                    listPoints.clear();
+                    mMap.clear();
+                    setMarker(latLng.latitude, latLng.longitude, "Hinzufügen");
+                    Toast.makeText(MapsActivity3.this,
+                            "Zum hinzufügen nochmal auf den Marker Klicken",
+                            Toast.LENGTH_LONG).show();
                 }
+            }
         });
-        }
-
-
-
-        public void openMainActivity3() {
-            Intent intent = new Intent(this, MainActivity3.class);
-            startActivity(intent);
-        }
+    }
 
     GoogleMap.OnInfoWindowClickListener MyOnInfoWindowClickListener
-            = new GoogleMap.OnInfoWindowClickListener(){
+            = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
-                    Intent resultIntent = new Intent().putExtra("latitude",
-                            marker.getPosition().latitude).putExtra("longitude",
-                            marker.getPosition().longitude);
+            Intent resultIntent = new Intent().putExtra("latitude",
+                    marker.getPosition().latitude).putExtra("longitude",
+                    marker.getPosition().longitude);
             setResult(Activity.RESULT_OK, resultIntent);
             finish();
         }
     };
 
-        private void setMarker(double Latitude, double Longitude, String Title) {
-            LatLng toilet = new LatLng(Latitude, Longitude);
-            mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)));
-        }
+    private void setMarker(double Latitude, double Longitude, String Title) {
+        LatLng toilet = new LatLng(Latitude, Longitude);
+        mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)));
+    }
 
 
     private void getdevicelocation() {
@@ -220,51 +204,48 @@ public class MapsActivity3 extends FragmentActivity implements OnMapReadyCallbac
 
     }
 
-        // neue location methode
 
+    private void moveCamera(LatLng latLng, float zoom) {
+        Log.d(TAG, "moveCamera: moving the camera to: lat:" + latLng.latitude + ",lng:" + latLng.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+    }
 
-
-        private void moveCamera(LatLng latLng, float zoom) {
-            Log.d(TAG, "moveCamera: moving the camera to: lat:" + latLng.latitude + ",lng:" + latLng.longitude);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-        }
-
-        private void getLocationPermission() {
-            Log.d(TAG, "getLocationPermission: getting location permission");
-            String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
-                } else {
-                    ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
-                }
+    private void getLocationPermission() {
+        Log.d(TAG, "getLocationPermission: getting location permission");
+        String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
             } else {
                 ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
             }
+        } else {
+            ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
         }
+    }
 
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            Log.d(TAG, "onRequestPermissionsResult: called.");
-            mLocationPermissionGranted = false;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        mLocationPermissionGranted = false;
 
-            switch (requestCode) {
-                case LOCATION_PERMISSION_REQUEST_CODE: {
-                    if (grantResults.length > 0) {
-                        for (int i = 0; i < grantResults.length; i++)
-                            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                                mLocationPermissionGranted = false;
-                                Log.d(TAG, "onRequestPermissionsResult: permission failed");
-                                return;
-                            }
-                    }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
-                    mLocationPermissionGranted = true;
-                    //initialize our map
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++)
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
                 }
+                Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                mLocationPermissionGranted = true;
+                //initialize our map
             }
         }
-        }
+    }
+}
 
 
 

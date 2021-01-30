@@ -144,15 +144,13 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         mMap = googleMap;
         getLocationPermission();
         getMyLocation();
-        //getdevicelocation();
-        moveCamera(new LatLng(mOrigin.latitude, mOrigin.longitude), DEFAULT_ZOOM);
+        getdevicelocationAndSetCamera(); //Teilweise Redundant aber ohne diese Methode stürzt die ganze App ab.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(true);
 
         setMarker(currentDestination.latitude, currentDestination.longitude, currentTitle);
-
     }
 
     private void setMarker(double Latitude, double Longitude, String Title) {
@@ -166,7 +164,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
-  /*  private void getdevicelocation() {
+    private void getdevicelocationAndSetCamera() {
 
         Log.d(TAG, "getdevicelocation: getting the devices current location");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -196,7 +194,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
     }
 
-   */
+
 
     private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permission");
@@ -313,7 +311,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + key;
 
-        //travelling mode
+        // Travelling mode
         String mode = "walking";
 
         // Output format
