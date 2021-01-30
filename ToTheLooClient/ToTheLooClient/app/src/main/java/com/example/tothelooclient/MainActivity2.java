@@ -44,7 +44,7 @@ public class MainActivity2 extends AppCompatActivity {
                 sendRating();
 
                 textviewSendRating.setText("Bewertung abgeschickt!");
-                //finish();
+                finish();
             }
         });
 

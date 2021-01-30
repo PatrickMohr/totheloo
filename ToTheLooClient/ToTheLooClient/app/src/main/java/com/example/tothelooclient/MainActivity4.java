@@ -168,7 +168,7 @@ public class MainActivity4 extends AppCompatActivity {
         onCheckedChangedPissoir(pissoirSwitch);
 
 
-        clientdatabase.insertToiletsAsString(id+";"+name+";"+kosten+";"+latitudeString+";"+longitudeString+";"+tag+";"+"sth"+";"+"sth");
+        clientdatabase.insertToiletsAsString(id+";"+name+";"+kosten+";"+latitudeString+";"+longitudeString+";"+tag+";"+""+";"+"");
         Toast.makeText(getApplicationContext(), "Toilette hinzugefügt",Toast.LENGTH_LONG).show();
 
     }
