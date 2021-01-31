@@ -3,6 +3,7 @@ package com.example.tothelooclient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import static java.lang.Math.round;
 
 public class MainActivity4 extends AppCompatActivity {
 
@@ -29,14 +32,29 @@ public class MainActivity4 extends AppCompatActivity {
     private Switch barriereSwitch;
     private Switch pissoirSwitch;
 
+<<<<<<< HEAD
+=======
+    private int latitudeInt;
+    private int longitudeInt;
+
+>>>>>>> FetchDataFromBackend
     private String name;
     private String id;
     private String barriere;
     private String pissoirs;
     private String kosten;
+<<<<<<< HEAD
     private String longitudes;
     private String latitudes;
     private String tag;
+=======
+    private String tag;
+    private String longitudeString;
+    private String latitudeString;
+
+    private double markerLatitude;
+    private double markerLongitude;
+>>>>>>> FetchDataFromBackend
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +76,20 @@ public class MainActivity4 extends AppCompatActivity {
         positionButton = findViewById(R.id.positionButton);
 
 
+<<<<<<< HEAD
+=======
+
+        clientdatabase = ClientDatabase.getFirstInstance(this);
+
+        kostenSwitch =  findViewById(R.id.switch1);
+        barriereSwitch =  findViewById(R.id.switch2);
+        pissoirSwitch =  findViewById(R.id.switch3);
+
+        fertigButton = findViewById(R.id.fertigButton);
+        positionButton = findViewById(R.id.positionButton);
+
+
+>>>>>>> FetchDataFromBackend
         positionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +100,15 @@ public class MainActivity4 extends AppCompatActivity {
         fertigButton.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 if(longitudes!= null){
                     addToilette();
                     finish();
+=======
+                if(latitudeString != null){
+                    addToilette();
+                   finish();
+>>>>>>> FetchDataFromBackend
                 } else {
                     Toast.makeText(getApplicationContext(), "Bitte Standort hinzufügen",Toast.LENGTH_LONG).show();
 
@@ -87,15 +125,23 @@ public class MainActivity4 extends AppCompatActivity {
                 tag = parent.getItemAtPosition(position).toString();
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> FetchDataFromBackend
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+<<<<<<< HEAD
 
     }
+=======
+    }
+
+>>>>>>> FetchDataFromBackend
     public void onCheckedChangedKosten(Switch s) {
 
 
@@ -110,6 +156,39 @@ public class MainActivity4 extends AppCompatActivity {
 
         }
 
+<<<<<<< HEAD
+=======
+    }
+
+    public void onCheckedChangedBarrierefrei (Switch s) {
+
+
+
+        if(s.isChecked()){
+            barrierefreiSwitchZustand = true;
+            barriere = String.valueOf(barrierefreiSwitchZustand);
+
+        } else {
+            barrierefreiSwitchZustand = false;
+            barriere = String.valueOf(barrierefreiSwitchZustand);
+        }
+
+    }
+
+    public void onCheckedChangedPissoir (Switch s) {
+
+
+
+        if(s.isChecked()){
+            pissoirSwitchZustand = true;
+            pissoirs = String.valueOf(pissoirSwitchZustand);
+
+        } else {
+            pissoirSwitchZustand = false;
+            pissoirs = String.valueOf(pissoirSwitchZustand);
+        }
+
+>>>>>>> FetchDataFromBackend
     }
 
     public void onCheckedChangedBarrierefrei (Switch s) {
@@ -155,13 +234,19 @@ public class MainActivity4 extends AppCompatActivity {
         onCheckedChangedKosten(kostenSwitch);
         onCheckedChangedBarrierefrei(barriereSwitch);
         onCheckedChangedPissoir(pissoirSwitch);
+<<<<<<< HEAD
         clientdatabase.insertToiletsAsString(id+";"+name+";"+kosten+";"+latitudes+";"+longitudes+";"+tag+";"+"sth"+";"+"sth");
+=======
+
+
+        clientdatabase.insertToiletsAsString(id+";"+name+";"+kosten+";"+latitudeString+";"+longitudeString+";"+tag+";"+""+";"+"");
+>>>>>>> FetchDataFromBackend
         Toast.makeText(getApplicationContext(), "Toilette hinzugefügt",Toast.LENGTH_LONG).show();
 
     }
 
-    @SuppressLint("MissingSuperCall")
     @Override
+<<<<<<< HEAD
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_GET_MAP_LOCATION && resultCode == MapsActivity3.RESULT_OK) {
             int latitude = data.getIntExtra("latitude", 0);
@@ -170,6 +255,26 @@ public class MainActivity4 extends AppCompatActivity {
             latitudes = String.valueOf(latitude);
             id = longitudes+latitudes;
             // do something with B's return values
+=======
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (REQUEST_GET_MAP_LOCATION): {
+                if (resultCode == Activity.RESULT_OK) {
+                    markerLatitude = data.getDoubleExtra("latitude",0);
+                    markerLongitude = data.getDoubleExtra("longitude", 0);
+
+                    latitudeInt = (int) Math.round(markerLatitude * 1000);
+                    longitudeInt = (int) Math.round(markerLongitude * 1000);
+
+                    longitudeString = String.valueOf(markerLongitude);
+                    latitudeString = String.valueOf(markerLatitude);
+
+                    id = String.valueOf(latitudeInt)+String.valueOf(longitudeInt);
+                }
+                break;
+            }
+>>>>>>> FetchDataFromBackend
         }
     }
 }

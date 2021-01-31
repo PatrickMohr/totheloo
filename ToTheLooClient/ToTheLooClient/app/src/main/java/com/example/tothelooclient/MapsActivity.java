@@ -95,6 +95,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.tothelooclient.ServerCommunicator.pullLoosFromServerToLocalDatabase;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMapClickListener {
@@ -109,19 +111,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private ClientDatabase clientDatabase;
-
-    //variablen
     private Boolean mLocationPermissionGranted = false;
-    private int rating;
+
+    private int starRating;
     private boolean kostenIsChecked;
     private boolean barrierefreiIsChecked;
     private boolean pissoirIsChecked;
 
-    //currentMarker
     private double currentMarkerLat;
     private double currentMarkerLng;
     private String currentMarkerTitle;
     private String currentMarkerId;
+    private String currentMarkerSnipp;
+    private String currentMarkerRating;
 
 
 
@@ -140,29 +142,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerHashMap = new HashMap<>();
         testString = "42;WonderLoo;53.5625;9.9573;4,5 \n 43;easyfalls;53.5725;9.9673;5 \n 44;Quite Place;53.5825;9.4573;3,7 \n 45;Sprinkler Anlage;56.5625;9.9373;1,1 \n 46;Das Geschäft;53.4625;9.8573;2,0  \n 47;Lass es Krachen;53.8625;10.9573;4,7";
 
-
-        boolean kostenIsChecked = getIntent().getBooleanExtra("kostenSwitch", false);
-        boolean barrierefreiIsChecked = getIntent().getBooleanExtra("barrierefreiSwitch", false);
-        boolean pissoirIsChecked = getIntent().getBooleanExtra("pissoirSwitch", false);
-
-        Bundle details = getIntent().getExtras();
-        if (details != null)
-        {
-            int starRating = details.getInt("ratingInt");
-            rating = starRating;
+        Bundle UiInformationen = getIntent().getExtras();
+        if (UiInformationen != null) {
+            kostenIsChecked = getIntent().getBooleanExtra("kostenSwitch", false);
+            barrierefreiIsChecked = getIntent().getBooleanExtra("barrierefreiSwitch", false);
+            pissoirIsChecked = getIntent().getBooleanExtra("pissoirSwitch", false);
+            starRating = UiInformationen.getInt("ratingInt");
         }
-
         clientDatabase = ClientDatabase.getFirstInstance(this);
+        getDataFromBackend();
     }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -176,8 +165,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
+<<<<<<< HEAD
        String toilettenString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
      //  String [] toiletten = testString.split("\n");
+=======
+        String toilettenString = clientDatabase.getAllToiletsAsString(starRating, kostenIsChecked);
+>>>>>>> FetchDataFromBackend
         if (toilettenString.length() != 0) {
             String[] toiletten = toilettenString.split("\n");
             for (String string : toiletten) {
@@ -187,8 +180,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String Lat = parts[2];
                 String Lng = parts[3];
                 String Rating = parts[4];
+<<<<<<< HEAD
                 {
                     setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+=======
+                String Type = parts[5];
+                if (Rating.equals("999")) {
+                    Rating = "keine Bewertung";
+                }
+
+                if (Type.equals("WC")) {
+                    setMarkerToilette(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+                }
+                if (pissoirIsChecked == true && (Type.equals("Pissoir"))) {
+                    setMarkerPissoir(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
+
+>>>>>>> FetchDataFromBackend
                 }
             }
         }
@@ -197,35 +204,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void openMainActivity3() {
         Intent markerDetails = new Intent(this, MainActivity3.class);
-        markerDetails.putExtra("Latitude",currentMarkerLat);
-        markerDetails.putExtra("Longitude",currentMarkerLng);
-        markerDetails.putExtra("Title",currentMarkerTitle);
-        markerDetails.putExtra("id",currentMarkerId);
+        markerDetails.putExtra("Latitude", currentMarkerLat);
+        markerDetails.putExtra("Longitude", currentMarkerLng);
+        markerDetails.putExtra("Title", currentMarkerTitle);
+        markerDetails.putExtra("id", currentMarkerId);
+        markerDetails.putExtra("rating", currentMarkerRating);
         startActivity(markerDetails);
     }
 
 
-
     GoogleMap.OnInfoWindowClickListener MyOnInfoWindowClickListener
-            = new GoogleMap.OnInfoWindowClickListener(){
+            = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
             currentMarkerLat = marker.getPosition().latitude;
             currentMarkerLng = marker.getPosition().longitude;
             currentMarkerTitle = marker.getTitle();
             currentMarkerId = markerHashMap.get(marker);
+            currentMarkerSnipp = marker.getSnippet();
+            String[] getBew = currentMarkerSnipp.split(":");
+            currentMarkerRating = getBew[1];
             openMainActivity3();
 
         }
     };
 
 
-
-
-    private void setMarker(double Latitude, double Longitude, String Title, String snip, String id) {
+    private void setMarkerToilette(double Latitude, double Longitude, String Title, String snip, String id) {
         LatLng toilet = new LatLng(Latitude, Longitude);
         Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.toilet_icon)).snippet(snip));
-        markerHashMap.put(m,id);
+        markerHashMap.put(m, id);
+    }
+
+    private void setMarkerPissoir(double Latitude, double Longitude, String Title, String snip, String id) {
+        LatLng toilet = new LatLng(Latitude, Longitude);
+        Marker m = mMap.addMarker(new MarkerOptions().position(toilet).title(Title).icon(BitmapDescriptorFactory.fromResource(R.drawable.urinal_icon)).snippet(snip));
+        markerHashMap.put(m, id);
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
@@ -279,6 +293,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         } else {
             ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void getDataFromBackend() {
+        HttpRequestThread httpThread = new HttpRequestThread();
+        httpThread.start();
+    }
+
+    class HttpRequestThread extends Thread {
+
+        public void run() {
+            try {
+                pullLoosFromServerToLocalDatabase();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

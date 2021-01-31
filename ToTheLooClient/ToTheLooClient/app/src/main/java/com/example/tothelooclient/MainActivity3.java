@@ -3,15 +3,12 @@ package com.example.tothelooclient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import org.w3c.dom.Text;
 
 public class MainActivity3 extends AppCompatActivity {
 
@@ -23,10 +20,18 @@ public class MainActivity3 extends AppCompatActivity {
 
     private String currentMarkerTitle;
     private String currentMarkerId;
+<<<<<<< HEAD
     private String name;
     private String name2;
     private String name3;
     private String name4;
+=======
+    private String currentRating;
+    private String kosten;
+    private String tag;
+
+
+>>>>>>> FetchDataFromBackend
 
     private int id;
     private ClientDatabase clientDatabase;
@@ -39,14 +44,13 @@ public class MainActivity3 extends AppCompatActivity {
             double markerLng = extras.getDouble("Longitude");
             String markerTitle = extras.getString("Title");
             String markerId = extras.getString("id");
+            String makerRating = extras.getString("rating");
 
             currentMarkerLat = markerLat;
             currentMarkerLng = markerLng;
             currentMarkerTitle = markerTitle;
             currentMarkerId = markerId;
-
-
-
+            currentRating = makerRating;
         }
 
 
@@ -56,14 +60,21 @@ public class MainActivity3 extends AppCompatActivity {
 
         clientDatabase =  ClientDatabase.getInstance();
 
+<<<<<<< HEAD
         clientDatabase.extractToiletsByIDAsCursorObject(id);
+=======
+        clientDatabase.getToiletsByIDAsCursorObject(id);
+>>>>>>> FetchDataFromBackend
 
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
         nameView.setText("Name: "+currentMarkerTitle);
 
         TextView bewertungView = (TextView) findViewById(R.id.bewertungView) ;
-        bewertungView.setText("Bewertung: "+"4"+" / 5");
+        bewertungView.setText("Bewertung: "+currentRating);
+        TextView tagView = (TextView) findViewById(R.id.tagView) ;
+        TextView kostenView = (TextView) findViewById(R.id.kostenView) ;
 
+<<<<<<< HEAD
         /*try{
 
             Cursor cursor = clientDatabase.extractRatingsByToiletID(id);
@@ -75,13 +86,37 @@ public class MainActivity3 extends AppCompatActivity {
                 name3 = cursor.getString(3);
                 name4 = cursor.getString(4;
                 nameView.setText("Name: "+name+name2+name3+name4);
+=======
+
+        try{
+
+            Cursor cursor = clientDatabase.getToiletsByIDAsCursorObject(id);
+
+            if (cursor.moveToFirst()) {
+
+                kosten = cursor.getString(2);
+                tag = cursor.getString(5);
+
+                if (kosten.equals("1")) {
+                    kostenView.setText("Kostenpflichtig: Ja");
+                }
+                else {
+                    kostenView.setText("Kostenpflichtig: Nein");
+
+                }
+
+                tagView.setText("Tag: "+ tag);
+>>>>>>> FetchDataFromBackend
             }
             cursor.close();
         } catch (SQLException e) {
 
         }
+<<<<<<< HEAD
 */
 
+=======
+>>>>>>> FetchDataFromBackend
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
