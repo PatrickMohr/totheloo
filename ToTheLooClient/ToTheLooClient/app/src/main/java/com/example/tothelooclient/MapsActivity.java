@@ -165,12 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(MyOnInfoWindowClickListener);
 
-<<<<<<< HEAD
-       String toilettenString = clientDatabase.getAllToiletsAsString(rating,kostenIsChecked);
-     //  String [] toiletten = testString.split("\n");
-=======
         String toilettenString = clientDatabase.getAllToiletsAsString(starRating, kostenIsChecked);
->>>>>>> FetchDataFromBackend
         if (toilettenString.length() != 0) {
             String[] toiletten = toilettenString.split("\n");
             for (String string : toiletten) {
@@ -180,10 +175,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String Lat = parts[2];
                 String Lng = parts[3];
                 String Rating = parts[4];
-<<<<<<< HEAD
-                {
-                    setMarker(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
-=======
                 String Type = parts[5];
                 if (Rating.equals("999")) {
                     Rating = "keine Bewertung";
@@ -195,7 +186,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (pissoirIsChecked == true && (Type.equals("Pissoir"))) {
                     setMarkerPissoir(Double.parseDouble(Lat), Double.parseDouble(Lng), name, "Bewertung:" + " " + Rating, id);
 
->>>>>>> FetchDataFromBackend
                 }
             }
         }
@@ -225,7 +215,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String[] getBew = currentMarkerSnipp.split(":");
             currentMarkerRating = getBew[1];
             openMainActivity3();
-
         }
     };
 

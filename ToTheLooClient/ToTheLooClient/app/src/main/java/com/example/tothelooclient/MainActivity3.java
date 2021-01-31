@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity3 extends AppCompatActivity {
-
     private Button routeButton;
     private Button rateButton;
 
@@ -20,18 +19,11 @@ public class MainActivity3 extends AppCompatActivity {
 
     private String currentMarkerTitle;
     private String currentMarkerId;
-<<<<<<< HEAD
-    private String name;
-    private String name2;
-    private String name3;
-    private String name4;
-=======
     private String currentRating;
     private String kosten;
     private String tag;
 
 
->>>>>>> FetchDataFromBackend
 
     private int id;
     private ClientDatabase clientDatabase;
@@ -60,11 +52,7 @@ public class MainActivity3 extends AppCompatActivity {
 
         clientDatabase =  ClientDatabase.getInstance();
 
-<<<<<<< HEAD
-        clientDatabase.extractToiletsByIDAsCursorObject(id);
-=======
         clientDatabase.getToiletsByIDAsCursorObject(id);
->>>>>>> FetchDataFromBackend
 
         TextView nameView = (TextView) findViewById(R.id.nameView) ;
         nameView.setText("Name: "+currentMarkerTitle);
@@ -74,19 +62,6 @@ public class MainActivity3 extends AppCompatActivity {
         TextView tagView = (TextView) findViewById(R.id.tagView) ;
         TextView kostenView = (TextView) findViewById(R.id.kostenView) ;
 
-<<<<<<< HEAD
-        /*try{
-
-            Cursor cursor = clientDatabase.extractRatingsByToiletID(id);
-
-            if (cursor.moveToPosition(4)) {
-
-                name = cursor.getString(1);
-                name2 = cursor.getString(2);
-                name3 = cursor.getString(3);
-                name4 = cursor.getString(4;
-                nameView.setText("Name: "+name+name2+name3+name4);
-=======
 
         try{
 
@@ -106,22 +81,16 @@ public class MainActivity3 extends AppCompatActivity {
                 }
 
                 tagView.setText("Tag: "+ tag);
->>>>>>> FetchDataFromBackend
             }
             cursor.close();
         } catch (SQLException e) {
 
         }
-<<<<<<< HEAD
-*/
-
-=======
->>>>>>> FetchDataFromBackend
         routeButton = (Button) findViewById(R.id.routeButton);
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    openMapsActivity2();
+                openMapsActivity2();
             }
         });
         rateButton = (Button) findViewById(R.id.rateButton);
